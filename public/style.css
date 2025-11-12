@@ -15,7 +15,7 @@
   --color-fondo: #ffffff;
   --color-fondo-claro: #f9f9f9;
   --color-borde: #ddd;
-  
+
   /* Nuevos colores para estados */
   --color-exito: #22c55e;
   --color-error: #ef4444;
@@ -45,7 +45,12 @@ body {
   padding: 0 20px;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Inter', 'Arial', sans-serif;
   color: var(--color-titulos);
   font-weight: 700;
@@ -62,7 +67,8 @@ a:hover {
   color: var(--color-acento-hover);
 }
 
-img, video {
+img,
+video {
   max-width: 100%;
   height: auto;
 }
@@ -89,7 +95,7 @@ header {
   align-items: center;
   z-index: 1000;
   padding: 0 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .header-container {
@@ -160,7 +166,7 @@ nav ul li a.active {
   left: -20px;
   background-color: var(--color-fondo);
   min-width: 240px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 10px 0;
   margin-top: 15px;
@@ -194,11 +200,12 @@ nav ul .lang-switcher {
   display: none;
 }
 
-.header-container > .lang-switcher {
+.header-container>.lang-switcher {
   display: flex;
   align-items: center;
   margin-left: 25px;
 }
+
 .lang-btn {
   background: none;
   border: none;
@@ -355,13 +362,14 @@ section p {
   background: var(--color-fondo);
   padding: 35px;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .service-item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 /* NUEVO: Íconos para Agentes */
@@ -378,6 +386,7 @@ section p {
   color: var(--color-acento);
   margin-bottom: 15px;
 }
+
 .service-item p {
   font-size: 1rem;
   color: var(--color-texto-secundario);
@@ -386,24 +395,28 @@ section p {
 
 /* --- NUEVO: Sección Casos de Uso --- */
 #casos-de-uso {
-    background-color: var(--color-fondo);
+  background-color: var(--color-fondo);
 }
+
 .use-case-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 30px;
   margin-top: 30px;
 }
+
 .use-case-item {
   background: var(--color-fondo-claro);
   padding: 30px;
   border-radius: 12px;
 }
+
 .use-case-item h3 {
   font-size: 1.4rem;
   color: var(--color-acento);
   margin-bottom: 15px;
 }
+
 .use-case-item p {
   text-align: left;
   font-size: 1rem;
@@ -412,8 +425,9 @@ section p {
 
 /* --- NUEVO: Sección Proceso --- */
 #proceso {
-    background-color: var(--color-fondo-claro);
+  background-color: var(--color-fondo-claro);
 }
+
 .process-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -421,12 +435,14 @@ section p {
   margin-top: 30px;
   text-align: center;
 }
+
 .process-item {
   background: var(--color-fondo);
   padding: 30px 25px;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
+
 .process-number {
   width: 50px;
   height: 50px;
@@ -438,11 +454,13 @@ section p {
   font-weight: 700;
   margin: 0 auto 20px auto;
 }
+
 .process-item h3 {
   font-size: 1.3rem;
   color: var(--color-titulos);
   margin-bottom: 10px;
 }
+
 .process-item p {
   font-size: 0.95rem;
   color: var(--color-texto-secundario);
@@ -451,26 +469,31 @@ section p {
 
 /* --- NUEVO: Sección Tecnología (antes Partners) --- */
 #tecnologia {
-    background-color: var(--color-fondo);
+  background-color: var(--color-fondo);
 }
+
 .tech-logos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    margin-top: 40px;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin-top: 40px;
+  flex-wrap: wrap;
 }
+
 .tech-logos img {
-    height: 80px;
-    width: auto;
-    opacity: 0.7;
+  height: 60px;
+  /* Reducimos la altura para mejor balance */
+  width: auto;
+  max-width: 150px;
+  /* Nos aseguramos que no sean demasiado anchos */
 }
 
 /* --- Sección Clientes (Link) --- */
 #clientes {
   background-color: var(--color-fondo-claro);
 }
+
 #clientes a {
   font-weight: 700;
   font-size: 1.1rem;
@@ -478,10 +501,11 @@ section p {
 
 /* --- Sección Blog (Botón) --- */
 #blog {
-    background-color: var(--color-fondo);
+  background-color: var(--color-fondo);
 }
+
 #blog .cta-btn {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 /* ============================= */
@@ -496,7 +520,8 @@ section p {
 
 #contactForm input,
 #contactForm textarea,
-.form-input { /* Clase genérica para el futuro <select> */
+.form-input {
+  /* Clase genérica para el futuro <select> */
   width: 100%;
   padding: 14px 18px;
   border: 1px solid var(--color-borde);
@@ -512,7 +537,7 @@ section p {
 .form-input:focus {
   outline: none;
   border-color: var(--color-acento);
-  box-shadow: 0 0 0 3px rgba(0,167,157, 0.2);
+  box-shadow: 0 0 0 3px rgba(0, 167, 157, 0.2);
 }
 
 #contactForm textarea {
@@ -606,7 +631,7 @@ footer {
   background-color: var(--color-fondo);
   padding: 30px 40px;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
 }
 
 #login-form.hidden,
@@ -636,7 +661,7 @@ footer {
 #client-portal input[type="file"]:focus {
   outline: none;
   border-color: var(--color-acento);
-  box-shadow: 0 0 0 3px rgba(0,167,157, 0.2);
+  box-shadow: 0 0 0 3px rgba(0, 167, 157, 0.2);
 }
 
 /* Color de error para login */
@@ -657,6 +682,7 @@ footer {
   background-color: #888;
   margin-top: 20px;
 }
+
 #client-portal button#logoutBtn:hover {
   background-color: #666;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -668,6 +694,7 @@ footer {
   background-color: var(--color-fondo-claro);
   cursor: pointer;
 }
+
 #client-portal input[type="file"]:hover {
   border-color: var(--color-acento);
 }
@@ -681,9 +708,11 @@ footer {
   overflow: hidden;
   border: 1px solid var(--color-borde);
 }
+
 #uploadProgress::-webkit-progress-bar {
   background-color: #eee;
 }
+
 #uploadProgress::-webkit-progress-value {
   background-color: var(--color-acento);
   transition: width 0.3s ease;
@@ -695,10 +724,12 @@ footer {
   font-size: 14px;
   color: var(--color-texto-secundario);
 }
+
 #uploadResult p {
   margin-bottom: 5px;
   word-break: break-all;
 }
+
 #uploadResult a {
   font-weight: 700;
 }
@@ -710,11 +741,11 @@ footer {
   .header-container {
     justify-content: space-between;
   }
-  
+
   nav {
     margin-left: 0;
   }
-  
+
   nav ul {
     display: flex;
     flex-direction: column;
@@ -725,7 +756,7 @@ footer {
     width: 100%;
     height: calc(100vh - 70px);
     padding: 30px;
-    box-shadow: 0 8px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.05);
     gap: 15px;
     align-items: flex-start;
     transition: right 0.4s ease-in-out;
@@ -739,8 +770,8 @@ footer {
     display: block;
     z-index: 1002;
   }
-  
-  .header-container > .lang-switcher {
+
+  .header-container>.lang-switcher {
     display: none;
   }
 
@@ -755,10 +786,12 @@ footer {
   .dropdown {
     width: 100%;
   }
+
   .dropdown .dropbtn {
     justify-content: space-between;
     width: 100%;
   }
+
   .dropdown-content {
     position: static;
     display: none;
@@ -771,6 +804,7 @@ footer {
     transform: none;
     min-width: unset;
   }
+
   .dropdown:hover .dropdown-content {
     display: block;
   }
@@ -778,11 +812,12 @@ footer {
   #hero {
     padding-top: 100px;
   }
+
   .hero-container {
     flex-direction: column;
     text-align: center;
   }
-  
+
   #hero .hero-image img {
     max-width: 80%;
     width: 100%;
@@ -790,22 +825,25 @@ footer {
     object-fit: cover;
     margin-top: 30px;
   }
-  
+
   #hero h1 {
     font-size: 2.2rem;
   }
+
   #hero p {
     font-size: 1.1rem;
   }
 
   .service-list {
-      grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
   }
+
   .use-case-list {
-      grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
   }
+
   .process-list {
-      grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
   }
 
   #login-form,
