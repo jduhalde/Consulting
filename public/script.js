@@ -178,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         db = firebase.firestore();
 
         // --- (CORRECCIÓN) MOVER LA LÓGICA DEL FORMULARIO AQUÍ ---
+        // Ahora, el formulario solo se activa DESPUÉS de que 'db' (Firestore) existe.
         setupContactForm();
 
         // --- LÓGICA DEL PORTAL DE CLIENTES (SI EXISTE) ---
