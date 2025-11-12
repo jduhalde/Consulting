@@ -1,0 +1,24 @@
+# Se activará y desplegará tu sitio en "live" (producción)
+# cada vez que hagas un "push" a la rama "master".
+
+name: Deploy to Firebase Hosting on PUSH
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          # Esta es la clave secreta que el asistente ya creó en GitHub
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JD_CONSULTING }}
+          projectId: jd-consulting
+          
+          # Esta es la parte clave: le dice que despliegue en el sitio "en vivo"
+          channelId: live
