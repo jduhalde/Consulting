@@ -160,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- FUNCIÓN DE INICIALIZACIÓN DE FIREBASE (AHORA GLOBAL) ---
     const checkFirebase = () => {
+        // Espera a que los SDKs y la config estén listos
         if (typeof firebase !== 'undefined' && firebase.app && typeof firebaseConfig !== 'undefined' && firebase.firestore) {
             initializeFirebase();
         } else {
@@ -169,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function initializeFirebase() {
         if (firebase.apps.length > 0) {
-            return;
+            return; // Evitar doble inicialización
         }
         firebase.initializeApp(firebaseConfig);
 
@@ -177,7 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
         db = firebase.firestore();
 
         // --- (CORRECCIÓN) MOVER LA LÓGICA DEL FORMULARIO AQUÍ ---
-        // Ahora, el formulario solo se activa DESPUÉS de que 'db' (Firestore) existe.
         setupContactForm();
 
         // --- LÓGICA DEL PORTAL DE CLIENTES (SI EXISTE) ---
@@ -249,7 +249,6 @@ function setupContactForm() {
                 return;
             }
 
-            // (Esta comprobación ya no es necesaria, pero la dejamos por seguridad)
             if (!db) {
                 console.error("Firestore (db) no está inicializado.");
                 feedback.style.color = 'var(--color-error)';
