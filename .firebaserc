@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "jd-consulting",
+    "jduhal": "proyecto-web-94242",
+    "jd-consulting": "jd-consulting"
+  },
+  "targets": {},
+  "etags": {}
+}

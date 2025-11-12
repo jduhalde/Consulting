@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área de Clientes - Julio Duhalde Consulting</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js" defer></script>
+
+    <script src="firebase-config.js"></script>
+
+    <script src="https://unpkg.com/lucide-react/dist/umd/lucide-react.js"></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <video src="LOGO_animado.mp4" autoplay loop muted playsinline></video>
+                </a>
+            </div>
+            
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="index.html#nosotros"><span data-es="Nosotros" data-en="About Us">Nosotros</span></a></li>
+                    
+                    <li class="dropdown">
+                        <a href="index.html#agentes" class="dropbtn">
+                            <span data-es="Soluciones" data-en="Solutions">Soluciones</span>
+                            <span class="arrow-down"></span>
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="index.html#agentes"><span data-es="Agentes de IA" data-en="AI Agents">Agentes de IA</span></a>
+                            <a href="index.html#casos-de-uso"><span data-es="Casos de Uso" data-en="Use Cases">Casos de Uso</span></a>
+                            <a href="index.html#proceso"><span data-es="Nuestro Proceso" data-en="Our Process">Nuestro Proceso</span></a>
+                        </div>
+                    </li>
+                    
+                    <li><a href="blog.html"><span data-es="Blog" data-en="Blog">Blog</span></a></li>
+                    <li><a href="client.html"><span data-es="Clientes" data-en="Clients">Clientes</span></a></li>
+                    <li><a href="index.html#contacto"><span data-es="Contacto" data-en="Contact">Contacto</span></a></li>
+
+                    <li class="lang-switcher">
+                        <button class="lang-btn" data-lang="es">ES</button>
+                        <span class="lang-separator">/</span>
+                        <button class="lang-btn" data-lang="en">EN</button>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang="es">ES</button>
+                <span class="lang-separator">/</span>
+                <button class="lang-btn" data-lang="en">EN</button>
+            </div>
+            
+            <div id="hamburger">&#9776;</div>
+        </div>
+    </header>
+
+    <section id="client-area">
+        <div class="container">
+            
+            <div id="login-form">
+                <h2><span data-es="Iniciar sesión" data-en="Login">Iniciar sesión</span></h2>
+                <input type="email" id="loginEmail" placeholder-es="Correo electrónico" placeholder-en="Email">
+                <input type="password" id="loginPassword" placeholder-es="Contraseña" placeholder-en="Password">
+                <button id="loginBtn">
+                    <span data-es="Ingresar" data-en="Enter">Ingresar</span>
+                    <i data-lucide="log-in"></i>
+                </button>
+                <p id="loginError"></p>
+                 <p style="text-align: center; margin-top: 15px; font-size: 14px;">
+                    <a href="#" id="forgotPasswordLink"><span data-es="¿Olvidaste tu contraseña?" data-en="Forgot your password?">¿Olvidaste tu contraseña?</span></a>
+                </p>
+            </div>
+            
+            <div id="client-portal" class="hidden">
+                <h2><span data-es="Bienvenido al portal del cliente" data-en="Welcome to the client portal">Bienvenido al portal del cliente</span></h2>
+                <input type="file" id="fileInput" multiple>
+                <button id="uploadBtn">
+                    <span data-es="Subir Archivos" data-en="Upload Files">Subir Archivos</span>
+                    <i data-lucide="cloud-upload"></i>
+                </button>
+                <progress id="uploadProgress" value="0" max="100"></progress>
+                <div id="fileList"><span data-es="No hay archivos seleccionados." data-en="No files selected.">No hay archivos seleccionados.</span></div>
+                <div id="uploadResult"></div>
+                <button id="logoutBtn">
+                    <span data-es="Cerrar sesión" data-en="Logout">Cerrar sesión</span>
+                    <i data-lucide="log-out"></i>
+                </button>
+            </div>
+            
+        </div>
+    </section>
+
+    <a href="#" id="scrollToTopBtn" title="Volver arriba">
+        <i data-lucide="arrow-up"></i>
+    </a>
+
+</body>
+</html>

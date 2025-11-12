@@ -1,0 +1,815 @@
+/* ============================= */
+/* Importar Google Fonts
+/* ============================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+/* ============================= */
+/* Variables de Color y Reset
+/* ============================= */
+:root {
+  --color-acento: #00a79d;
+  --color-acento-hover: #00857b;
+  --color-texto-principal: #333;
+  --color-texto-secundario: #555;
+  --color-titulos: #111;
+  --color-fondo: #ffffff;
+  --color-fondo-claro: #f9f9f9;
+  --color-borde: #ddd;
+  
+  /* Nuevos colores para estados */
+  --color-exito: #22c55e;
+  --color-error: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+/* ============================= */
+/* Estilos generales del sitio
+/* ============================= */
+body {
+  font-family: 'Inter', 'Arial', sans-serif;
+  line-height: 1.7;
+  color: var(--color-texto-principal);
+  background-color: var(--color-fondo);
+  font-weight: 400;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', 'Arial', sans-serif;
+  color: var(--color-titulos);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+a {
+  color: var(--color-acento);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--color-acento-hover);
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Estilos para íconos Lucide */
+.lucide {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.5px;
+}
+
+/* ============================= */
+/* Header / Navegación
+/* ============================= */
+header {
+  background-color: var(--color-fondo);
+  color: var(--color-texto-principal);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+  padding: 0 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+header .logo video {
+  height: 70px;
+  margin-top: 7px;
+}
+
+nav {
+  margin-left: auto;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+nav ul li a {
+  color: var(--color-texto-secundario);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 15px;
+  transition: color 0.3s;
+  padding: 5px 0;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+  color: var(--color-acento);
+}
+
+/* --- Estilos Menú Desplegable --- */
+.dropdown {
+  position: relative;
+}
+
+.dropdown .dropbtn {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid var(--color-texto-secundario);
+  margin-left: 6px;
+  transition: all 0.3s ease;
+}
+
+.dropdown:hover .arrow-down {
+  border-top-color: var(--color-acento);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: -20px;
+  background-color: var(--color-fondo);
+  min-width: 240px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  padding: 10px 0;
+  margin-top: 15px;
+  z-index: 1001;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown-content a {
+  color: var(--color-texto-principal);
+  padding: 12px 20px;
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.dropdown-content a:hover {
+  background-color: var(--color-fondo-claro);
+  color: var(--color-acento);
+}
+
+/* --- Selector de Idioma --- */
+nav ul .lang-switcher {
+  display: none;
+}
+
+.header-container > .lang-switcher {
+  display: flex;
+  align-items: center;
+  margin-left: 25px;
+}
+.lang-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--color-texto-secundario);
+  padding: 5px;
+  transition: color 0.3s ease;
+}
+
+.lang-btn.active {
+  color: var(--color-acento);
+}
+
+.lang-btn:hover {
+  color: var(--color-acento);
+}
+
+.lang-separator {
+  color: #ccc;
+  font-size: 15px;
+  margin: 0 2px;
+}
+
+/* --- Menú hamburguesa --- */
+#hamburger {
+  display: none;
+  font-size: 30px;
+  cursor: pointer;
+  margin-left: 20px;
+  color: var(--color-titulos);
+}
+
+/* ============================= */
+/* Hero Section
+/* ============================= */
+#hero {
+  display: flex;
+  align-items: center;
+  padding: 150px 0 90px 0;
+  background-color: var(--color-fondo);
+}
+
+.hero-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.hero-text {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#hero h1 {
+  font-size: 3rem;
+  margin-bottom: 25px;
+  color: var(--color-titulos);
+}
+
+#hero p {
+  font-size: 1.25rem;
+  margin-bottom: 35px;
+  color: var(--color-texto-secundario);
+}
+
+/* --- Estilos de Botones Globales --- */
+.cta-btn,
+#contactForm button,
+#login-form button,
+#client-portal button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background-color: var(--color-acento);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.cta-btn:hover,
+#contactForm button:hover,
+#login-form button:hover,
+#client-portal button:hover {
+  background-color: var(--color-acento-hover);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 167, 157, 0.3);
+}
+
+#hero .cta-btn {
+  align-self: center;
+}
+
+#hero .hero-image img {
+  width: 450px;
+  height: 270px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* ============================= */
+/* Secciones de contenido
+/* ============================= */
+section {
+  padding: 90px 0;
+}
+
+section:nth-of-type(odd) {
+  background-color: var(--color-fondo-claro);
+}
+
+section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  text-align: center;
+  color: var(--color-titulos);
+}
+
+section p {
+  max-width: 800px;
+  margin: 0 auto 20px auto;
+  text-align: center;
+  color: var(--color-texto-secundario);
+  font-size: 1.1rem;
+}
+
+/* --- Sección Agentes (antes Servicios) --- */
+#agentes {
+  background-color: var(--color-fondo-claro);
+}
+
+.service-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.service-item {
+  background: var(--color-fondo);
+  padding: 35px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.service-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* NUEVO: Íconos para Agentes */
+.agent-icon {
+  width: 48px;
+  height: 48px;
+  stroke-width: 2px;
+  color: var(--color-acento);
+  margin-bottom: 20px;
+}
+
+.service-item h3 {
+  font-size: 1.5rem;
+  color: var(--color-acento);
+  margin-bottom: 15px;
+}
+.service-item p {
+  font-size: 1rem;
+  color: var(--color-texto-secundario);
+  text-align: center;
+}
+
+/* --- NUEVO: Sección Casos de Uso --- */
+#casos-de-uso {
+    background-color: var(--color-fondo);
+}
+.use-case-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-top: 30px;
+}
+.use-case-item {
+  background: var(--color-fondo-claro);
+  padding: 30px;
+  border-radius: 12px;
+}
+.use-case-item h3 {
+  font-size: 1.4rem;
+  color: var(--color-acento);
+  margin-bottom: 15px;
+}
+.use-case-item p {
+  text-align: left;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* --- NUEVO: Sección Proceso --- */
+#proceso {
+    background-color: var(--color-fondo-claro);
+}
+.process-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  margin-top: 30px;
+  text-align: center;
+}
+.process-item {
+  background: var(--color-fondo);
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+.process-number {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 50%;
+  background-color: var(--color-acento);
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 auto 20px auto;
+}
+.process-item h3 {
+  font-size: 1.3rem;
+  color: var(--color-titulos);
+  margin-bottom: 10px;
+}
+.process-item p {
+  font-size: 0.95rem;
+  color: var(--color-texto-secundario);
+  text-align: center;
+}
+
+/* --- NUEVO: Sección Tecnología (antes Partners) --- */
+#tecnologia {
+    background-color: var(--color-fondo);
+}
+.tech-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+.tech-logos img {
+    height: 80px;
+    width: auto;
+    opacity: 0.7;
+}
+
+/* --- Sección Clientes (Link) --- */
+#clientes {
+  background-color: var(--color-fondo-claro);
+}
+#clientes a {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* --- Sección Blog (Botón) --- */
+#blog {
+    background-color: var(--color-fondo);
+}
+#blog .cta-btn {
+    margin-top: 30px;
+}
+
+/* ============================= */
+/* Contacto
+/* ============================= */
+#contactForm {
+  max-width: 700px;
+  margin: 20px auto 0;
+  display: grid;
+  gap: 22px;
+}
+
+#contactForm input,
+#contactForm textarea,
+.form-input { /* Clase genérica para el futuro <select> */
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  background-color: #fff;
+  color: var(--color-texto-principal);
+}
+
+#contactForm input:focus,
+#contactForm textarea:focus,
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-acento);
+  box-shadow: 0 0 0 3px rgba(0,167,157, 0.2);
+}
+
+#contactForm textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+#contactForm button {
+  width: auto;
+  justify-self: center;
+  padding: 14px 30px;
+}
+
+#contactFeedback {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* Logo estático en Formulario */
+#logoContacto {
+  justify-self: center;
+  width: 100px;
+  height: auto;
+  margin-top: 25px;
+}
+
+/* ============================= */
+/* Footer
+/* ============================= */
+footer {
+  background-color: var(--color-fondo-claro);
+  color: var(--color-texto-secundario);
+  padding: 40px 20px;
+  text-align: center;
+  border-top: 1px solid #eee;
+}
+
+/* ============================= */
+/* Botón Volver Arriba
+/* ============================= */
+#scrollToTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: var(--color-acento);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#scrollToTopBtn.show {
+  display: flex;
+  opacity: 1;
+}
+
+#scrollToTopBtn:hover {
+  background-color: var(--color-acento-hover);
+  transform: translateY(-3px);
+  color: white;
+}
+
+#scrollToTopBtn .lucide {
+  width: 24px;
+  height: 24px;
+}
+
+/* ============================= */
+/* Portal de clientes - Client Area
+/* ============================= */
+#client-area {
+  padding: 100px 20px 50px;
+  min-height: calc(100vh - 70px);
+  background-color: var(--color-fondo-claro);
+}
+
+#login-form,
+#client-portal {
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: var(--color-fondo);
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+}
+
+#login-form.hidden,
+#client-portal.hidden {
+  display: none;
+}
+
+#login-form h2,
+#client-portal h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: var(--color-titulos);
+}
+
+#login-form input,
+#client-portal input[type="file"] {
+  width: 100%;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+}
+
+#login-form input:focus,
+#client-portal input[type="file"]:focus {
+  outline: none;
+  border-color: var(--color-acento);
+  box-shadow: 0 0 0 3px rgba(0,167,157, 0.2);
+}
+
+/* Color de error para login */
+#loginError {
+  color: var(--color-error);
+  text-align: center;
+  margin-top: 15px;
+  font-weight: 700;
+}
+
+#login-form button,
+#client-portal button {
+  width: 100%;
+  padding: 14px;
+}
+
+#client-portal button#logoutBtn {
+  background-color: #888;
+  margin-top: 20px;
+}
+#client-portal button#logoutBtn:hover {
+  background-color: #666;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Estilos de subida de archivos --- */
+#client-portal input[type="file"] {
+  border: 2px dashed var(--color-borde);
+  background-color: var(--color-fondo-claro);
+  cursor: pointer;
+}
+#client-portal input[type="file"]:hover {
+  border-color: var(--color-acento);
+}
+
+#uploadProgress {
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+  appearance: none;
+  overflow: hidden;
+  border: 1px solid var(--color-borde);
+}
+#uploadProgress::-webkit-progress-bar {
+  background-color: #eee;
+}
+#uploadProgress::-webkit-progress-value {
+  background-color: var(--color-acento);
+  transition: width 0.3s ease;
+}
+
+#fileList,
+#uploadResult {
+  margin-top: 15px;
+  font-size: 14px;
+  color: var(--color-texto-secundario);
+}
+#uploadResult p {
+  margin-bottom: 5px;
+  word-break: break-all;
+}
+#uploadResult a {
+  font-weight: 700;
+}
+
+/* ============================= */
+/* Responsive
+/* ============================= */
+@media (max-width: 768px) {
+  .header-container {
+    justify-content: space-between;
+  }
+  
+  nav {
+    margin-left: 0;
+  }
+  
+  nav ul {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-fondo);
+    position: fixed;
+    top: 70px;
+    right: -100%;
+    width: 100%;
+    height: calc(100vh - 70px);
+    padding: 30px;
+    box-shadow: 0 8px 10px rgba(0,0,0,0.05);
+    gap: 15px;
+    align-items: flex-start;
+    transition: right 0.4s ease-in-out;
+  }
+
+  nav ul.open {
+    right: 0;
+  }
+
+  #hamburger {
+    display: block;
+    z-index: 1002;
+  }
+  
+  .header-container > .lang-switcher {
+    display: none;
+  }
+
+  nav ul .lang-switcher {
+    display: flex;
+    margin-left: 0;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    width: 100%;
+  }
+
+  .dropdown {
+    width: 100%;
+  }
+  .dropdown .dropbtn {
+    justify-content: space-between;
+    width: 100%;
+  }
+  .dropdown-content {
+    position: static;
+    display: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 10px 0 0 15px;
+    margin-top: 10px;
+    background: transparent;
+    opacity: 1;
+    transform: none;
+    min-width: unset;
+  }
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  #hero {
+    padding-top: 100px;
+  }
+  .hero-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  #hero .hero-image img {
+    max-width: 80%;
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    margin-top: 30px;
+  }
+  
+  #hero h1 {
+    font-size: 2.2rem;
+  }
+  #hero p {
+    font-size: 1.1rem;
+  }
+
+  .service-list {
+      grid-template-columns: 1fr;
+  }
+  .use-case-list {
+      grid-template-columns: 1fr;
+  }
+  .process-list {
+      grid-template-columns: 1fr;
+  }
+
+  #login-form,
+  #client-portal {
+    padding: 20px;
+  }
+}

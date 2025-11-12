@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Julio Duhalde Consulting - IA, Finanzas y Legal Tech</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://unpkg.com/lucide-react/dist/umd/lucide-react.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <video src="LOGO_animado.mp4" autoplay loop muted playsinline></video>
+                </a>
+            </div>
+            
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#nosotros"><span data-es="Nosotros" data-en="About Us">Nosotros</span></a></li>
+                    
+                    <li class="dropdown">
+                        <a href="#agentes" class="dropbtn">
+                            <span data-es="Soluciones" data-en="Solutions">Soluciones</span>
+                            <span class="arrow-down"></span>
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="#agentes"><span data-es="Agentes de IA" data-en="AI Agents">Agentes de IA</span></a>
+                            <a href="#casos-de-uso"><span data-es="Casos de Uso" data-en="Use Cases">Casos de Uso</span></a>
+                            <a href="#proceso"><span data-es="Nuestro Proceso" data-en="Our Process">Nuestro Proceso</span></a>
+                        </div>
+                    </li>
+                    
+                    <li><a href="blog.html"><span data-es="Blog" data-en="Blog">Blog</span></a></li>
+                    <li><a href="client.html"><span data-es="Clientes" data-en="Clients">Clientes</span></a></li>
+                    <li><a href="#contacto"><span data-es="Contacto" data-en="Contact">Contacto</span></a></li>
+
+                    <li class="lang-switcher">
+                        <button class="lang-btn" data-lang="es">ES</button>
+                        <span class="lang-separator">/</span>
+                        <button class="lang-btn" data-lang="en">EN</button>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang="es">ES</button>
+                <span class="lang-separator">/</span>
+                <button class="lang-btn" data-lang="en">EN</button>
+            </div>
+            
+            <div id="hamburger">&#9776;</div>
+        </div>
+    </header>
+
+    <section id="hero">
+        <div class="container hero-container">
+            <div class="hero-text">
+                <h1><span data-es="¿Automatizar procesos contables, legales o financieros?" data-en="Automate accounting, legal, or financial processes?">¿Automatizar procesos contables, legales o financieros?</span></h1>
+                <p><span data-es="Como Ingeniero en IA, Abogado, Contador Público y Lic. en Economía, creo agentes que entienden la lógica de tu negocio. Conectamos Vertex AI con AFIP, tus contratos y tus finanzas." data-en="As an AI Engineer, Lawyer, CPA, and Economist, I build agents that understand your business logic. We connect Vertex AI with AFIP, your contracts, and your finances.">Como Ingeniero en IA, Abogado, Contador Público y Lic. en Economía, creo agentes que entienden la lógica de tu negocio. Conectamos Vertex AI con AFIP, tus contratos y tus finanzas.</span></p>
+                <a href="#contacto" class="cta-btn">
+                    <span data-es="Comenzá tu Prueba Gratuita" data-en="Start Your Free Trial">Comenzá tu Prueba Gratuita</span>
+                </a>
+            </div>
+            <div class="hero-image">
+                <img src="ai.jpg" alt="Inteligencia Artificial">
+            </div>
+        </div>
+    </section>
+
+    <section id="nosotros">
+        <div class="container">
+            <h2><span data-es="Mi Fortaleza: IA + Leyes + Contabilidad + Economía" data-en="My Strength: AI + Law + Accounting + Economics">Mi Fortaleza: IA + Leyes + Contabilidad + Economía</span></h2>
+            <p><span data-es="El problema de la IA no es solo técnico, es de negocio. Como Ingeniero en IA, Abogado (UBA), Contador Público (UBA) y Lic. en Economía (UBA), mi valor no es solo implementar la tecnología (Vertex AI, AWS, Azure), es entender el 'por qué': las retenciones de AFIP, las cláusulas de un contrato y la lógica financiera que impulsa tu empresa." data-en="The AI problem isn't just technical; it's about business. As an AI Engineer, Lawyer (UBA), CPA (UBA), and Economist (UBA), my value isn't just implementing technology (Vertex AI, AWS, Azure); it's understanding the 'why': AFIP tax regulations, contract clauses, and the financial logic that drives your company.">El problema de la IA no es solo técnico, es de negocio. Como Ingeniero en IA, Abogado (UBA), Contador Público (UBA) y Lic. en Economía (UBA), mi valor no es solo implementar la tecnología (Vertex AI, AWS, Azure), es entender el 'por qué': las retenciones de AFIP, las cláusulas de un contrato y la lógica financiera que impulsa tu empresa.</span></p>
+        </div>
+    </section>
+
+    <section id="agentes">
+        <div class="container">
+            <h2><span data-es="Agentes de IA para tu Negocio" data-en="AI Agents for Your Business">Agentes de IA para tu Negocio</span></h2>
+            <div class="service-list">
+                <div class="service-item" id="servicio-contador">
+                    <i class="agent-icon" data-lucide="calculator"></i>
+                    <h3><span data-es="Contador IA (Accounting-Tech)" data-en="Accountant AI (Accounting-Tech)">Contador IA (Accounting-Tech)</span></h3>
+                    <p><span data-es="Agente que procesa facturas, las valida contra el padrón de AFIP, calcula retenciones y las ingresa a tu sistema de gestión (ERP)." data-en="Agent that processes invoices, validates them against AFIP, calculates tax withholdings, and enters them into your ERP system.">Agente que procesa facturas, las valida contra el padrón de AFIP, calcula retenciones y las ingresa a tu sistema de gestión (ERP).</span></p>
+                </div>
+                <div class="service-item" id="servicio-auditor">
+                    <i class="agent-icon" data-lucide="scale"></i>
+                    <h3><span data-es="Auditor IA (Legal-Tech)" data-en="Auditor AI (Legal-Tech)">Auditor IA (Legal-Tech)</span></h3>
+                    <p><span data-es="Agente que lee y analiza miles de contratos o documentos legales, detectando cláusulas de riesgo, vencimientos o incumplimientos." data-en="Agent that reads and analyzes thousands of contracts or legal documents, detecting risk clauses, expirations, or non-compliance.">Agente que lee y analiza miles de contratos o documentos legales, detectando cláusulas de riesgo, vencimientos o incumplimientos.</span></p>
+                </div>
+                <div class="service-item" id="servicio-analista">
+                    <i class="agent-icon" data-lucide="line-chart"></i>
+                    <h3><span data-es="Analista IA (Finance-Tech)" data-en="Analyst AI (Finance-Tech)">Analista IA (Finance-Tech)</span></h3>
+                    <p><span data-es="Agente que lee reportes de mercado y balances para extraer tendencias, riesgos y oportunidades financieras, resumiendo la información clave." data-en="Agent that reads market reports and balance sheets to extract trends, risks, and financial opportunities, summarizing key insights.">Agente que lee reportes de mercado y balances para extraer tendencias, riesgos y oportunidades financieras, resumiendo la información clave.</span></p>
+                </div>
+                <div class="service-item" id="servicio-procesos">
+                    <i class="agent-icon" data-lucide="bot"></i>
+                    <h3><span data-es="Agente de Procesos (RPA+GenAI)" data-en="Process Agent (RPA+GenAI)">Agente de Procesos (RPA+GenAI)</span></h3>
+                    <p><span data-es="Automatización de tareas administrativas complejas que requieran lógica de negocio, interactuando con tus sistemas y liberando a tu equipo." data-en="Automation of complex administrative tasks that require business logic, interacting with your systems and freeing up your team.">Automatización de tareas administrativas complejas que requieran lógica de negocio, interactuando con tus sistemas y liberando a tu equipo.</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="casos-de-uso">
+        <div class="container">
+            <h2><span data-es="Casos de uso por área funcional" data-en="Use cases by functional area">Casos de uso por área funcional</span></h2>
+            <p><span data-es="Nuestros agentes de IA pueden insertarse en distintos puntos del recorrido del cliente o del flujo interno de tu empresa, dependiendo de la necesidad." data-en="Our AI agents can be inserted at different points in the customer journey or your company's internal flow, depending on the need.">Nuestros agentes de IA pueden insertarse en distintos puntos del recorrido del cliente o del flujo interno de tu empresa, dependiendo de la necesidad.</span></p>
+            
+            <div class="use-case-list">
+                <div class="use-case-item">
+                    <h3><span data-es="Administración y Soporte Interno" data-en="Admin & Internal Support">Administración y Soporte Interno</span></h3>
+                    <p><span data-es="Asisten al equipo respondiendo preguntas sobre procesos, sistemas o documentación. Funcionan como un primer nivel de soporte operativo." data-en="Assist the team by answering questions about processes, systems, or documentation. They function as a first level of operational support.">Asisten al equipo respondiendo preguntas sobre procesos, sistemas o documentación. Funcionan como un primer nivel de soporte operativo.</span></p>
+                </div>
+                <div class="use-case-item">
+                    <h3><span data-es="Atención de Reclamos" data-en="Claims Management">Atención de Reclamos</span></h3>
+                    <p><span data-es="Reciben, gestionan y responden reclamos. Registran el caso en CRM, lo escalan si hace falta, y aseguran trazabilidad de punta a punta." data-en="Receive, manage, and respond to claims. They log the case in the CRM, escalate if necessary, and ensure end-to-end traceability.">Reciben, gestionan y responden reclamos. Registran el caso en CRM, lo escalan si hace falta, y aseguran trazabilidad de punta a punta.</span></p>
+                </div>
+                <div class="use-case-item">
+                    <h3><span data-es="Preventa y Ventas" data-en="Pre-Sales & Sales">Preventa y Ventas</span></h3>
+                    <p><span data-es="Califican leads, responden preguntas frecuentes, agendan reuniones y envían presupuestos. Asisten a los vendedores y acompañan al cliente." data-en="Qualify leads, answer FAQs, schedule meetings, and send quotes. They assist salespeople and accompany the customer.">Califican leads, responden preguntas frecuentes, agendan reuniones y envían presupuestos. Asisten a los vendedores y acompañan al cliente.</span></p>
+                </div>
+                 <div class="use-case-item">
+                    <h3><span data-es="Postventa y Soporte" data-en="Post-Sales & Support">Postventa y Soporte</span></h3>
+                    <p><span data-es="Brindan soporte técnico básico, seguimiento de pedidos o servicios, envían recordatorios, y generan fidelización automática." data-en="Provide basic technical support, order/service tracking, send reminders, and generate automatic loyalty.">Brindan soporte técnico básico, seguimiento de pedidos o servicios, envían recordatorios, y generan fidelización automática.</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="proceso">
+        <div class="container">
+            <h2><span data-es="¿Cómo es el proceso?" data-en="What is the process?">¿Cómo es el proceso?</span></h2>
+            <div class="process-list">
+                <div class="process-item">
+                    <div class="process-number">1</div>
+                    <h3><span data-es="Reunión Inicial" data-en="Initial Meeting">Reunión Inicial</span></h3>
+                    <p><span data-es="Nos reunimos para entender a fondo tus desafíos y detectar las oportunidades de automatización." data-en="We meet to fully understand your challenges and identify automation opportunities.">Nos reunimos para entender a fondo tus desafíos y detectar las oportunidades de automatización.</span></p>
+                </div>
+                <div class="process-item">
+                    <div class="process-number">2</div>
+                    <h3><span data-es="Propuesta de Trabajo" data-en="Work Proposal">Propuesta de Trabajo</span></h3>
+                    <p><span data-es="Elaboramos un esquema detallando el alcance de una Prueba de Concepto (PoC) y cómo se integraría." data-en="We prepare a proposal detailing the scope of a Proof of Concept (PoC) and how it would integrate.">Elaboramos un esquema detallando el alcance de una Prueba de Concepto (PoC) y cómo se integraría.</span></p>
+                </div>
+                <div class="process-item">
+                    <div class="process-number">3</div>
+                    <h3><span data-es="Prueba de Concepto (PoC) Gratuita" data-en="Free Proof of Concept (PoC)">Prueba de Concepto (PoC) Gratuita</span></h3>
+                    <p><span data-es="Entiendo tu problema. Te construiré un agente funcional (PoC) que automatice parte de tu tarea. Si te da resultados, hablamos de precios. Si no, no me debes nada." data-en="I understand your problem. I will build a functional agent (PoC) to automate part of your task. If it delivers results, we talk about pricing. If not, you owe me nothing.">Entiendo tu problema. Te construiré un agente funcional (PoC) que automatice parte de tu tarea. Si te da resultados, hablamos de precios. Si no, no me debes nada.</span></p>
+                </div>
+                <div class="process-item">
+                    <div class="process-number">4</div>
+                    <h3><span data-es="Suscripción y Escalado" data-en="Subscription & Scaling">Suscripción y Escalado</span></h3>
+                    <p><span data-es="Si la PoC es exitosa, activamos un plan de suscripción mensual (ej: 200 USD/mes) y escalamos la solución." data-en="If the PoC is successful, we activate a monthly subscription plan (e.g., 200 USD/mo) and scale the solution.">Si la PoC es exitosa, activamos un plan de suscripción mensual (ej: 200 USD/mes) y escalamos la solución.</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="tecnologia">
+        <div class="container">
+            <h2><span data-es="Nuestra Tecnología" data-en="Our Technology">Nuestra Tecnología</span></h2>
+            <p><span data-es="Somos expertos en el ecosistema de Google (Vertex AI) y nos integramos de forma nativa con las plataformas que tu empresa ya usa, incluyendo Amazon Web Services (AWS) y Microsoft Azure." data-en="We are experts in the Google ecosystem (Vertex AI) and we integrate natively with the platforms your company already uses, including Amazon Web Services (AWS) and Microsoft Azure.">Somos expertos en el ecosistema de Google (Vertex AI) y nos integramos de forma nativa con las plataformas que tu empresa ya usa, incluyendo Amazon Web Services (AWS) y Microsoft Azure.</span></p>
+            <div class="tech-logos">
+                <img src="https://via.placeholder.com/200x100.png?text=Vertex+AI" alt="Vertex AI">
+                <img src="https://via.placeholder.com/200x100.png?text=AWS" alt="AWS">
+                <img src="https://via.placeholder.com/200x100.png?text=Azure" alt="Azure">
+            </div>
+        </div>
+    </section>
+
+    <section id="clientes">
+        <div class="container">
+            <h2><span data-es="Área de Clientes" data-en="Client Area">Área de Clientes</span></h2>
+            <p><span data-es="Accedé al" data-en="Access the">Accedé al</span> <a href="client.html"><span data-es="portal de clientes" data-en="client portal">portal de clientes</span></a> <span data-es="para subir y descargar archivos de manera segura." data-en="to securely upload and download files.">para subir y descargar archivos de manera segura.</span></p>
+        </div>
+    </section>
+
+    <section id="blog">
+        <div class="container">
+            <h2><span data-es="Visitá nuestro Blog" data-en="Visit our Blog">Visitá nuestro Blog</span></h2>
+            <p><span data-es="Leé nuestros últimos artículos sobre el impacto de la IA, mirá tutoriales en nuestro canal de YouTube 'Transformación Digital' y descargá guías en PDF." data-en="Read our latest articles on the impact of AI, watch tutorials on our 'Digital Transformation' YouTube channel, and download PDF guides.">Leé nuestros últimos artículos sobre el impacto de la IA, mirá tutoriales en nuestro canal de YouTube 'Transformación Digital' y descargá guías en PDF.</span></p>
+            <a href="blog.html" class="cta-btn">
+                <span data-es="Ir al Blog" data-en="Go to Blog">Ir al Blog</span>
+                <i data-lucide="arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <section id="contacto">
+        <div class="container">
+            <h2><span data-es="Hablemos de tu Prueba Gratuita" data-en="Let's Talk About Your Free Trial">Hablemos de tu Prueba Gratuita</span></h2>
+            <form id="contactForm">
+                <input type="text" id="name" placeholder-es="Nombre" placeholder-en="Name">
+                <input type="email" id="email" placeholder-es="Email" placeholder-en="Email">
+                <textarea id="message" placeholder-es="Contame sobre el proceso que querés automatizar..." placeholder-en="Tell me about the process you want to automate..."></textarea>
+                <button type="submit">
+                    <span data-es="Solicitar PoC Gratuita" data-en="Request Free PoC">Solicitar PoC Gratuita</span>
+                    <i data-lucide="send"></i>
+                </button>
+                <div id="contactFeedback"></div>
+                <img src="LOGO.png" alt="Logo JD Consulting" id="logoContacto">
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© <span id="year"></span> Julio Duhalde Consulting</p>
+        </div>
+    </footer>
+
+    <a href="#" id="scrollToTopBtn" title="Volver arriba">
+        <i data-lucide="arrow-up"></i>
+    </a>
+    
+    <script src="https://unpkg.com/lucide-react/dist/umd/lucide-react.js"></script>
+    <script src="script.js" defer></script>
+</body>
+</html>
