@@ -1,9 +1,8 @@
 /* ============================= */
-/* Lógica General del Sitio (V1.2)
+/* Lógica General del Sitio (V1.3 - Corrección Formulario)
 /* ============================= */
 
 // --- Variables Globales de Firebase ---
-// Se inicializarán cuando el SDK cargue
 let db, auth, storage;
 
 /**
@@ -86,87 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Formulario de Contacto (AHORA REAL con Firestore) ---
-    const contactForm = qs('#contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            // Bloquear el botón para evitar envíos múltiples
-            const submitButton = contactForm.querySelector('button[type="submit"]');
-            submitButton.disabled = true;
-
-            const name = qs('#name').value.trim();
-            const email = qs('#email').value.trim();
-            const message = qs('#message').value.trim();
-            const feedback = qs('#contactFeedback');
-            const currentLang = localStorage.getItem('lang') || 'es';
-
-            feedback.textContent = '';
-
-            const msgs = {
-                es: {
-                    fill: 'Por favor completá todos los campos.',
-                    email: 'Ingresá un email válido.',
-                    success: '¡Mensaje enviado! Gracias por contactarte.',
-                    error: 'Error: No se pudo enviar el mensaje. Intenta de nuevo.'
-                },
-                en: {
-                    fill: 'Please fill in all fields.',
-                    email: 'Please enter a valid email.',
-                    success: 'Message sent! Thank you for getting in touch.',
-                    error: 'Error: Could not send message. Please try again.'
-                }
-            };
-
-            if (!name || !email || !message) {
-                feedback.style.color = 'var(--color-error)';
-                feedback.textContent = msgs[currentLang].fill;
-                submitButton.disabled = false;
-                return;
-            }
-
-            const re = /\S+@\S+\.\S+/;
-            if (!re.test(email)) {
-                feedback.style.color = 'var(--color-error)';
-                feedback.textContent = msgs[currentLang].email;
-                submitButton.disabled = false;
-                return;
-            }
-
-            // Si la base de datos (db) no se inicializó, mostrar error
-            if (!db) {
-                feedback.style.color = 'var(--color-error)';
-                feedback.textContent = msgs[currentLang].error;
-                submitButton.disabled = false;
-                return;
-            }
-
-            // --- INICIO DE LA LÓGICA DE FIRESTORE ---
-            db.collection("mensajes_contacto").add({
-                nombre: name,
-                email: email,
-                mensaje: message,
-                fecha: new Date()
-            })
-                .then(() => {
-                    // Éxito
-                    feedback.style.color = 'var(--color-exito)';
-                    feedback.textContent = msgs[currentLang].success;
-                    contactForm.reset();
-                    submitButton.disabled = false;
-                })
-                .catch((error) => {
-                    // Error
-                    console.error("Error al guardar mensaje en Firestore: ", error);
-                    feedback.style.color = 'var(--color-error)';
-                    feedback.textContent = msgs[currentLang].error;
-                    submitButton.disabled = false;
-                });
-            // --- FIN DE LA LÓGICA DE FIRESTORE ---
-        });
-    }
-
     // --- Lógica del Selector de Idioma ---
     const langButtons = qsa('.lang-btn');
     const translatableElements = qsa('[data-es]');
@@ -241,9 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- FUNCIÓN DE INICIALIZACIÓN DE FIREBASE (AHORA GLOBAL) ---
-    // Esta función se llamará en todas las páginas (index, blog, client)
     const checkFirebase = () => {
-        // Espera a que los SDKs y la config estén listos
         if (typeof firebase !== 'undefined' && firebase.app && typeof firebaseConfig !== 'undefined' && firebase.firestore) {
             initializeFirebase();
         } else {
@@ -253,21 +169,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function initializeFirebase() {
         if (firebase.apps.length > 0) {
-            return; // Evitar doble inicialización
+            return;
         }
         firebase.initializeApp(firebaseConfig);
 
         // --- INICIALIZAR SERVICIOS GLOBALES ---
-        // Firestore (db) se necesita en index.html, blog.html (y client.html)
         db = firebase.firestore();
 
+        // --- (CORRECCIÓN) MOVER LA LÓGICA DEL FORMULARIO AQUÍ ---
+        // Ahora, el formulario solo se activa DESPUÉS de que 'db' (Firestore) existe.
+        setupContactForm();
+
         // --- LÓGICA DEL PORTAL DE CLIENTES (SI EXISTE) ---
-        // Estos servicios solo se inicializan si estamos en client.html
         if (document.getElementById('login-form')) {
             if (firebase.auth && firebase.storage) {
                 auth = firebase.auth();
                 storage = firebase.storage();
-                setupClientPortal(auth, storage); // Mover la lógica a una función
+                setupClientPortal(auth, storage);
             } else {
                 console.error("No se pudieron cargar los SDK de Auth o Storage para el portal.");
             }
@@ -278,6 +196,93 @@ document.addEventListener('DOMContentLoaded', () => {
     checkFirebase();
 
 }); // Fin del DOMContentLoaded
+
+/* ============================= */
+/* Lógica del Formulario de Contacto (AHORA EN SU PROPIA FUNCIÓN)
+/* ============================= */
+function setupContactForm() {
+    const qs = (s) => document.querySelector(s);
+    const contactForm = qs('#contactForm');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            const name = qs('#name').value.trim();
+            const email = qs('#email').value.trim();
+            const message = qs('#message').value.trim();
+            const feedback = qs('#contactFeedback');
+            const currentLang = localStorage.getItem('lang') || 'es';
+
+            feedback.textContent = '';
+
+            const msgs = {
+                es: {
+                    fill: 'Por favor completá todos los campos.',
+                    email: 'Ingresá un email válido.',
+                    success: '¡Mensaje enviado! Gracias por contactarte.',
+                    error: 'Error: No se pudo enviar el mensaje. Intenta de nuevo.'
+                },
+                en: {
+                    fill: 'Please fill in all fields.',
+                    email: 'Please enter a valid email.',
+                    success: 'Message sent! Thank you for getting in touch.',
+                    error: 'Error: Could not send message. Please try again.'
+                }
+            };
+
+            if (!name || !email || !message) {
+                feedback.style.color = 'var(--color-error)';
+                feedback.textContent = msgs[currentLang].fill;
+                submitButton.disabled = false;
+                return;
+            }
+
+            const re = /\S+@\S+\.\S+/;
+            if (!re.test(email)) {
+                feedback.style.color = 'var(--color-error)';
+                feedback.textContent = msgs[currentLang].email;
+                submitButton.disabled = false;
+                return;
+            }
+
+            // (Esta comprobación ya no es necesaria, pero la dejamos por seguridad)
+            if (!db) {
+                console.error("Firestore (db) no está inicializado.");
+                feedback.style.color = 'var(--color-error)';
+                feedback.textContent = msgs[currentLang].error;
+                submitButton.disabled = false;
+                return;
+            }
+
+            // --- INICIO DE LA LÓGICA DE FIRESTORE ---
+            db.collection("mensajes_contacto").add({
+                nombre: name,
+                email: email,
+                mensaje: message,
+                fecha: new Date()
+            })
+                .then(() => {
+                    // Éxito
+                    feedback.style.color = 'var(--color-exito)';
+                    feedback.textContent = msgs[currentLang].success;
+                    contactForm.reset();
+                    submitButton.disabled = false;
+                })
+                .catch((error) => {
+                    // Error
+                    console.error("Error al guardar mensaje en Firestore: ", error);
+                    feedback.style.color = 'var(--color-error)';
+                    feedback.textContent = msgs[currentLang].error;
+                    submitButton.disabled = false;
+                });
+            // --- FIN DE LA LÓGICA DE FIRESTORE ---
+        });
+    }
+}
 
 /* ============================= */
 /* Lógica del Portal de Clientes (Firebase)
