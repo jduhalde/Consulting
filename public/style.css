@@ -482,10 +482,10 @@ section p {
 }
 
 .tech-logos img {
-  height: 60px;
+  height: 50px;
   /* Reducimos la altura para mejor balance */
   width: auto;
-  max-width: 150px;
+  max-width: 180px;
   /* Nos aseguramos que no sean demasiado anchos */
 }
 
