@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
                 window.scrollTo({
                     top: offsetPosition,
-                    behavior: 'smooth'
+                    behavior: 'auto'
                 });
             }
             // --- FIN DE LA CORRECCIÓN ---
