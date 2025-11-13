@@ -140,6 +140,7 @@ nav ul li a.active {
 }
 
 /* --- Estilos Menú Desplegable --- */
+/* --- Estilos Menú Desplegable (CORREGIDO) --- */
 .dropdown {
   position: relative;
 }
@@ -174,17 +175,28 @@ nav ul li a.active {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 10px 0;
-  margin-top: 15px;
+  margin-top: 5px;
+  /* CAMBIADO: de 15px a 5px para reducir el gap */
   z-index: 1001;
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  /* AGREGADO: evita que el menú bloquee el hover */
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
   opacity: 1;
   transform: translateY(0);
+  pointer-events: auto;
+  /* AGREGADO: permite hacer clic en el menú */
+}
+
+/* NUEVO: Mantener el menú visible cuando el mouse está sobre él */
+.dropdown-content:hover {
+  display: block;
+  opacity: 1;
 }
 
 .dropdown-content a {
@@ -193,6 +205,7 @@ nav ul li a.active {
   display: block;
   font-size: 14px;
   font-weight: 700;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .dropdown-content a:hover {
