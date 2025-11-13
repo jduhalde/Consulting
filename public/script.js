@@ -1,5 +1,5 @@
 /* ============================= */
-/* Lógica General del Sitio (V1.9 - CORRECCIÓN FORMULARIO Y LOGOS)
+/* Lógica General del Sitio (V2.0.0 - LÓGICA DE EVENTOS CORREGIDA)
 /* ============================= */
 
 // --- Variables Globales de Firebase ---
@@ -25,12 +25,81 @@ document.addEventListener('DOMContentLoaded', () => {
         yearSpan.textContent = new Date().getFullYear();
     }
 
-    // --- Smooth scroll para links internos ---
+    /* ============================= */
+    /* INICIO DE LA CORRECCIÓN V2.0.0  */
+    /* ============================= */
+
+    // --- Control del menú desplegable con CLICK (DEBE IR ANTES DEL SMOOTH SCROLL) ---
+    const dropdown = document.querySelector('.dropdown');
+    const dropdownBtn = dropdown ? dropdown.querySelector('.dropbtn') : null;
+    const dropdownContent = dropdown ? dropdown.querySelector('.dropdown-content') : null;
+
+    if (dropdown && dropdownBtn && dropdownContent) {
+
+        // Toggle menú al hacer clic en "Soluciones"
+        dropdownBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation(); // IMPORTANTE: Detener propagación para que no llegue al smooth scroll
+
+            const isVisible = dropdownContent.style.display === 'block';
+
+            if (isVisible) {
+                // Cerrar
+                dropdownContent.style.opacity = '0';
+                dropdownContent.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    dropdownContent.style.display = 'none';
+                }, 200);
+            } else {
+                // Abrir
+                dropdownContent.style.display = 'block';
+                dropdownContent.offsetHeight; // Forzar reflow
+                dropdownContent.style.opacity = '1';
+                dropdownContent.style.transform = 'translateY(0)';
+            }
+        });
+
+        // Cerrar menú al hacer clic en cualquier link del menú
+        const dropdownLinks = dropdownContent.querySelectorAll('a');
+        dropdownLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                dropdownContent.style.opacity = '0';
+                dropdownContent.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    dropdownContent.style.display = 'none';
+                }, 200);
+            });
+        });
+
+        // Cerrar menú al hacer clic fuera
+        document.addEventListener('click', (e) => {
+            if (!dropdown.contains(e.target)) {
+                if (dropdownContent.style.display === 'block') {
+                    dropdownContent.style.opacity = '0';
+                    dropdownContent.style.transform = 'translateY(-10px)';
+                    setTimeout(() => {
+                        dropdownContent.style.display = 'none';
+                    }, 200);
+                }
+            }
+        });
+
+        dropdownBtn.style.cursor = 'pointer';
+    }
+
+    // --- Smooth scroll para links internos (CON MANEJO DE ERRORES) ---
     document.addEventListener('click', (e) => {
+        // Ignorar clicks en el dropdown button (ya lo maneja el listener de arriba)
+        if (e.target.closest('.dropbtn')) {
+            return;
+        }
+
         const a = e.target.closest('a[href^="#"]');
         if (!a) return;
 
         const href = a.getAttribute('href');
+
+        // Si es solo "#", scrollear al top
         if (href === '#') {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -49,11 +118,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     top: offsetPosition,
                     behavior: 'smooth'
                 });
+
+                // Cerrar menú móvil si está abierto
+                const mainNav = document.querySelector('#mainNav > ul');
+                const hamburger = document.querySelector('#hamburger');
+                if (mainNav && hamburger) {
+                    mainNav.classList.remove('open');
+                    hamburger.classList.remove('open');
+                }
             }
         } catch (error) {
             console.warn('Error en smooth scroll:', error);
+            // Permitir navegación normal si hay error
         }
     });
+
+    /* ============================= */
+    /* FIN DE LA CORRECCIÓN V2.0.0     */
+    /* ============================= */
+
 
     // --- Menú Hamburguesa (Corregido) ---
     const hamburger = qs('#hamburger');
@@ -156,71 +239,6 @@ document.addEventListener('DOMContentLoaded', () => {
         sections.forEach(section => {
             observer.observe(section);
         });
-    }
-
-    /* ============================= */
-    /* REEMPLAZA CON ESTE BLOQUE     */
-    /* ============================= */
-
-    // --- Control del menú desplegable con CLICK (Corregido y Limpio) ---
-    const dropdown = document.querySelector('.dropdown');
-    const dropdownBtn = dropdown ? dropdown.querySelector('.dropbtn') : null;
-    const dropdownContent = dropdown ? dropdown.querySelector('.dropdown-content') : null;
-
-    if (dropdown && dropdownBtn && dropdownContent) {
-
-        dropdownBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            // ¡NO HAY e.stopPropagation()!
-            // ¡NO HAY scroll manual!
-            // Esta función AHORA SÓLO se encarga de abrir y cerrar el menú.
-
-            // Lógica existente para abrir/cerrar el menú
-            const isVisible = dropdownContent.style.display === 'block';
-
-            if (isVisible) {
-                // Cerrar
-                dropdownContent.style.opacity = '0';
-                dropdownContent.style.transform = 'translateY(-10px)';
-                setTimeout(() => {
-                    dropdownContent.style.display = 'none';
-                }, 200);
-            } else {
-                // Abrir
-                dropdownContent.style.display = 'block';
-                dropdownContent.offsetHeight; // Forzar reflow
-                dropdownContent.style.opacity = '1';
-                dropdownContent.style.transform = 'translateY(0)';
-            }
-        });
-
-        // Cerrar menú al hacer clic en cualquier link del menú
-        const dropdownLinks = dropdownContent.querySelectorAll('a');
-        dropdownLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                dropdownContent.style.opacity = '0';
-                dropdownContent.style.transform = 'translateY(-10px)';
-                setTimeout(() => {
-                    dropdownContent.style.display = 'none';
-                }, 200);
-            });
-        });
-
-        // Cerrar menú al hacer clic fuera
-        document.addEventListener('click', (e) => {
-            if (!dropdown.contains(e.target)) {
-                if (dropdownContent.style.display === 'block') {
-                    dropdownContent.style.opacity = '0';
-                    dropdownContent.style.transform = 'translateY(-10px)';
-                    setTimeout(() => {
-                        dropdownContent.style.display = 'none';
-                    }, 200);
-                }
-            }
-        });
-
-        // BONUS: Añadir indicador visual de que es clickeable
-        dropdownBtn.style.cursor = 'pointer';
     }
 
     // *** CORRECCIÓN CRÍTICA: Configurar el formulario INMEDIATAMENTE ***
