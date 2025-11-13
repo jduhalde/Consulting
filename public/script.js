@@ -159,57 +159,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ============================= 
-    // FIX: Menú desplegable con JavaScript
+    // FIX: Menú desplegable con CLICK (más confiable)
     // ============================= 
 
-    // Agregar esto DENTRO del DOMContentLoaded, después de la línea ~175
-    // (Justo después de la sección de "Resaltado de Navegación al hacer Scroll")
+    // Agregar esto DENTRO del DOMContentLoaded, reemplazando el código anterior del dropdown
 
-    // --- NUEVO: Control del menú desplegable ---
+    // --- Control del menú desplegable con CLICK ---
     const dropdown = document.querySelector('.dropdown');
-    const dropdownContent = document.querySelector('.dropdown-content');
+    const dropdownBtn = dropdown ? dropdown.querySelector('.dropbtn') : null;
+    const dropdownContent = dropdown ? dropdown.querySelector('.dropdown-content') : null;
 
-    if (dropdown && dropdownContent) {
-        let timeoutId;
+    if (dropdown && dropdownBtn && dropdownContent) {
 
-        // Mostrar menú al hacer hover en el dropdown
-        dropdown.addEventListener('mouseenter', () => {
-            clearTimeout(timeoutId);
-            dropdownContent.style.display = 'block';
-            // Forzar reflow para que la transición funcione
-            dropdownContent.offsetHeight;
-            dropdownContent.style.opacity = '1';
-            dropdownContent.style.transform = 'translateY(0)';
-        });
+        // Toggle menú al hacer clic en "Soluciones"
+        dropdownBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
 
-        // Mantener menú visible cuando el mouse está sobre él
-        dropdownContent.addEventListener('mouseenter', () => {
-            clearTimeout(timeoutId);
-        });
+            const isVisible = dropdownContent.style.display === 'block';
 
-        // Ocultar menú cuando el mouse sale del dropdown
-        dropdown.addEventListener('mouseleave', () => {
-            timeoutId = setTimeout(() => {
+            if (isVisible) {
+                // Cerrar
                 dropdownContent.style.opacity = '0';
                 dropdownContent.style.transform = 'translateY(-10px)';
                 setTimeout(() => {
                     dropdownContent.style.display = 'none';
                 }, 200);
-            }, 100); // Delay de 100ms para dar tiempo a mover el mouse
+            } else {
+                // Abrir
+                dropdownContent.style.display = 'block';
+                // Forzar reflow
+                dropdownContent.offsetHeight;
+                dropdownContent.style.opacity = '1';
+                dropdownContent.style.transform = 'translateY(0)';
+            }
         });
 
-        // Ocultar menú cuando el mouse sale del contenido
-        dropdownContent.addEventListener('mouseleave', () => {
-            timeoutId = setTimeout(() => {
-                dropdownContent.style.opacity = '0';
-                dropdownContent.style.transform = 'translateY(-10px)';
-                setTimeout(() => {
-                    dropdownContent.style.display = 'none';
-                }, 200);
-            }, 100);
-        });
-
-        // Cerrar menú al hacer clic en cualquier link
+        // Cerrar menú al hacer clic en cualquier link del menú
         const dropdownLinks = dropdownContent.querySelectorAll('a');
         dropdownLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -220,6 +206,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 200);
             });
         });
+
+        // Cerrar menú al hacer clic fuera
+        document.addEventListener('click', (e) => {
+            if (!dropdown.contains(e.target)) {
+                if (dropdownContent.style.display === 'block') {
+                    dropdownContent.style.opacity = '0';
+                    dropdownContent.style.transform = 'translateY(-10px)';
+                    setTimeout(() => {
+                        dropdownContent.style.display = 'none';
+                    }, 200);
+                }
+            }
+        });
+
+        // BONUS: Añadir indicador visual de que es clickeable
+        dropdownBtn.style.cursor = 'pointer';
     }
 
     // *** CORRECCIÓN CRÍTICA: Configurar el formulario INMEDIATAMENTE ***

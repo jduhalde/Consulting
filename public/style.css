@@ -139,9 +139,7 @@ nav ul li a.active {
   color: var(--color-acento);
 }
 
-/* --- Estilos Menú Desplegable --- */
-
-/* --- Estilos Menú Desplegable (SIMPLIFICADO PARA JS) --- */
+/* --- Estilos Menú Desplegable (CON CLICK) --- */
 .dropdown {
   position: relative;
 }
@@ -162,8 +160,10 @@ nav ul li a.active {
   transition: all 0.3s ease;
 }
 
-.dropdown:hover .arrow-down {
+/* Animación de la flecha cuando el menú está abierto */
+.dropdown.open .arrow-down {
   border-top-color: var(--color-acento);
+  transform: rotate(180deg);
 }
 
 .dropdown-content {
