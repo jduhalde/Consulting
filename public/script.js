@@ -158,6 +158,70 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ============================= 
+    // FIX: Menú desplegable con JavaScript
+    // ============================= 
+
+    // Agregar esto DENTRO del DOMContentLoaded, después de la línea ~175
+    // (Justo después de la sección de "Resaltado de Navegación al hacer Scroll")
+
+    // --- NUEVO: Control del menú desplegable ---
+    const dropdown = document.querySelector('.dropdown');
+    const dropdownContent = document.querySelector('.dropdown-content');
+
+    if (dropdown && dropdownContent) {
+        let timeoutId;
+
+        // Mostrar menú al hacer hover en el dropdown
+        dropdown.addEventListener('mouseenter', () => {
+            clearTimeout(timeoutId);
+            dropdownContent.style.display = 'block';
+            // Forzar reflow para que la transición funcione
+            dropdownContent.offsetHeight;
+            dropdownContent.style.opacity = '1';
+            dropdownContent.style.transform = 'translateY(0)';
+        });
+
+        // Mantener menú visible cuando el mouse está sobre él
+        dropdownContent.addEventListener('mouseenter', () => {
+            clearTimeout(timeoutId);
+        });
+
+        // Ocultar menú cuando el mouse sale del dropdown
+        dropdown.addEventListener('mouseleave', () => {
+            timeoutId = setTimeout(() => {
+                dropdownContent.style.opacity = '0';
+                dropdownContent.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    dropdownContent.style.display = 'none';
+                }, 200);
+            }, 100); // Delay de 100ms para dar tiempo a mover el mouse
+        });
+
+        // Ocultar menú cuando el mouse sale del contenido
+        dropdownContent.addEventListener('mouseleave', () => {
+            timeoutId = setTimeout(() => {
+                dropdownContent.style.opacity = '0';
+                dropdownContent.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    dropdownContent.style.display = 'none';
+                }, 200);
+            }, 100);
+        });
+
+        // Cerrar menú al hacer clic en cualquier link
+        const dropdownLinks = dropdownContent.querySelectorAll('a');
+        dropdownLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                dropdownContent.style.opacity = '0';
+                dropdownContent.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    dropdownContent.style.display = 'none';
+                }, 200);
+            });
+        });
+    }
+
     // *** CORRECCIÓN CRÍTICA: Configurar el formulario INMEDIATAMENTE ***
     setupContactForm();
 

@@ -141,6 +141,7 @@ nav ul li a.active {
 
 /* --- Estilos Menú Desplegable --- */
 
+/* --- Estilos Menú Desplegable (SIMPLIFICADO PARA JS) --- */
 .dropdown {
   position: relative;
 }
@@ -165,24 +166,10 @@ nav ul li a.active {
   border-top-color: var(--color-acento);
 }
 
-/* CRÍTICO: Crear un puente invisible entre el botón y el menú */
-.dropdown::before {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: -20px;
-  right: -20px;
-  height: 20px;
-  /* Puente invisible de 20px */
-  background: transparent;
-  z-index: 1000;
-}
-
 .dropdown-content {
   display: none;
   position: absolute;
   top: calc(100% + 10px);
-  /* Espacio visual pero cubierto por el ::before */
   left: -20px;
   background-color: var(--color-fondo);
   min-width: 240px;
@@ -193,13 +180,6 @@ nav ul li a.active {
   opacity: 0;
   transform: translateY(-10px);
   transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.dropdown:hover .dropdown-content,
-.dropdown-content:hover {
-  display: block;
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .dropdown-content a {
