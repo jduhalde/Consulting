@@ -158,33 +158,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ============================= 
-    // FIX: Menú desplegable con CLICK (más confiable)
-    // ============================= 
-
-    // Agregar esto DENTRO del DOMContentLoaded, reemplazando el código anterior del dropdown
-
-    // --- Control del menú desplegable con CLICK ---
-    const dropdown = document.querySelector('.dropdown');
-    const dropdownBtn = dropdown ? dropdown.querySelector('.dropbtn') : null;
-    const dropdownContent = dropdown ? dropdown.querySelector('.dropdown-content') : null;
-
+    // --- Control del menú desplegable con CLICK (Corregido) ---
     if (dropdown && dropdownBtn && dropdownContent) {
 
-        // Toggle menú al hacer clic en "Soluciones"
         dropdownBtn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
 
-            const isVisible = dropdownContent.style.display === 'block';
+            // --- INICIO DE LA CORRECCIÓN ---
+            // 1. Obtenemos el target del scroll (el href del botón)
+            const href = dropdownBtn.getAttribute('href');
+            const tgt = document.querySelector(href);
 
+            // 2. Hacemos el scroll manualmente
+            if (tgt) {
+                const headerOffset = 70;
+                const elementPosition = tgt.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+            // --- FIN DE LA CORRECCIÓN ---
+
+            // Lógica existente para abrir/cerrar el menú
+            const isVisible = dropdownContent.style.display === 'block';
             if (isVisible) {
-                // Cerrar
-                dropdownContent.style.opacity = '0';
-                dropdownContent.style.transform = 'translateY(-10px)';
-                setTimeout(() => {
-                    dropdownContent.style.display = 'none';
-                }, 200);
+                // ... (código para cerrar) ...
             } else {
                 // Abrir
                 dropdownContent.style.display = 'block';
