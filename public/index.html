@@ -282,8 +282,46 @@
 
     <section id="contacto">
         <div class="container">
-            <h2><span data-es="Hablemos de tu Prueba Gratuita" data-en="Let's Talk About Your Free Trial">Hablemos de tu
-                    Prueba Gratuita</span></h2>
+            <h2>
+                <span data-es="Hablemos de tu Prueba Gratuita" data-en="Let's Talk About Your Free Trial">
+                    Hablemos de tu Prueba Gratuita
+                </span>
+            </h2>
+
+            <p style="max-width: 700px; margin: 0 auto 40px auto; font-size: 1.1rem;">
+                <span data-es="La mejor forma de empezar es una conversación. Elegí cómo preferís contactarte:"
+                    data-en="The best way to start is with a conversation. Choose how you prefer to contact:">
+                    La mejor forma de empezar es una conversación. Elegí cómo preferís contactarte:
+                </span>
+            </p>
+
+            <!-- Botones de contacto directo -->
+            <div style="display: flex; gap: 20px; justify-content: center; margin-bottom: 50px; flex-wrap: wrap;">
+
+                <!-- Botón WhatsApp -->
+                <a href="https://wa.me/5491165849428?text=Hola%20Julio,%20vi%20tu%20sitio%20web%20y%20estoy%20interesado%20en%20una%20Prueba%20de%20Concepto%20gratuita"
+                    target="_blank" class="cta-btn" style="background-color: #25D366; min-width: 220px;">
+                    <i data-lucide="message-circle"></i>
+                    <span data-es="WhatsApp" data-en="WhatsApp">WhatsApp</span>
+                </a>
+
+                <!-- Botón Email -->
+                <a href="mailto:julioduhalde@gmail.com?subject=Consulta%20sobre%20Prueba%20de%20Concepto%20-%20JD%20Consulting&body=Hola%20Julio,%0D%0A%0D%0AVi%20tu%20sitio%20web%20y%20estoy%20interesado%20en%20conocer%20más%20sobre%20tus%20servicios%20de%20automatización%20con%20IA.%0D%0A%0D%0AMi%20empresa:%20%0D%0AMi%20proceso%20a%20automatizar:%20%0D%0A%0D%0ASaludos."
+                    class="cta-btn" style="background-color: #EA4335; min-width: 220px;">
+                    <i data-lucide="mail"></i>
+                    <span data-es="Email" data-en="Email">Email</span>
+                </a>
+
+            </div>
+
+            <!-- Separador -->
+            <div style="text-align: center; margin: 40px 0; color: #999;">
+                <span data-es="O completá el formulario:" data-en="Or fill out the form:">
+                    O completá el formulario:
+                </span>
+            </div>
+
+            <!-- Formulario (existente) -->
             <form id="contactForm">
                 <input type="text" id="name" placeholder-es="Nombre" placeholder-en="Name">
                 <input type="email" id="email" placeholder-es="Email" placeholder-en="Email">
@@ -296,6 +334,7 @@
                 <div id="contactFeedback"></div>
                 <img src="LOGO.png" alt="Logo JD Consulting" id="logoContacto">
             </form>
+
         </div>
     </section>
 

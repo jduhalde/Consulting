@@ -856,3 +856,47 @@ footer {
     padding: 20px;
   }
 }
+
+/* ============================= */
+/* Botones de contacto directo
+/* ============================= */
+
+/* Estilos para botones de WhatsApp y Email */
+.contact-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+}
+
+/* Hover especial para WhatsApp */
+a.cta-btn[style*="#25D366"]:hover {
+  background-color: #20BA5A !important;
+}
+
+/* Hover especial para Email */
+a.cta-btn[style*="#EA4335"]:hover {
+  background-color: #D33426 !important;
+}
+
+/* Separador de contacto */
+.contact-separator {
+  text-align: center;
+  margin: 40px 0;
+  color: #999;
+  font-size: 1rem;
+}
+
+/* Responsive para botones de contacto */
+@media (max-width: 768px) {
+  .contact-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  a.cta-btn[style*="min-width"] {
+    width: 100%;
+    max-width: 300px;
+  }
+}
