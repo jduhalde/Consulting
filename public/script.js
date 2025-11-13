@@ -1,5 +1,5 @@
 /* ============================= */
-/* Lógica General del Sitio (V2.0.0 - LÓGICA DE EVENTOS CORREGIDA)
+/* Lógica General del Sitio (V2.0.1 - FIX DE RENDIMIENTO)
 /* ============================= */
 
 // --- Variables Globales de Firebase ---
@@ -209,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /* --- INICIO DE BLOQUE COMENTADO (BUG DE RENDIMIENTO) ---
     // --- Resaltado de Navegación al hacer Scroll ---
     const sections = qsa('section[id]');
     const navLinks = qsa('#mainNav ul li a');
@@ -240,6 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
             observer.observe(section);
         });
     }
+    --- FIN DE BLOQUE COMENTADO (BUG DE RENDIMIENTO) --- */
 
     // *** CORRECCIÓN CRÍTICA: Configurar el formulario INMEDIATAMENTE ***
     setupContactForm();
@@ -433,7 +435,7 @@ function setupClientPortal(auth, storage) {
                     if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
                         loginError.textContent = (currentLang === 'es') ? 'Email o contraseña incorrectos.' : 'Incorrect email or password.';
                     } else {
-                        loginError.textContent = (currentLang === 'es') ? 'Error al iniciar sesión.' : 'Error logging in.';
+                        loginError.textContent = (currentLang === 'es')T ? 'Error al iniciar sesión.' : 'Error logging in.';
                     }
                 });
         });
@@ -502,7 +504,7 @@ function setupClientPortal(auth, storage) {
                     },
                     error => {
                         console.error("Error de subida:", error);
-                        uploadResult.innerHTML += `<p style="color:var(--color-error);">Error: ${error.message}</p>`;
+                        uploadResult.innerHTML += `<p style="color:var(--color-error);">Error: ${message}</p>`;
                     },
                     () => {
                         uploadTask.snapshot.ref.getDownloadURL().then(url => {
