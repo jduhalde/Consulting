@@ -1,5 +1,5 @@
 /* ============================= */
-/* Lógica General del Sitio (V2.0.2 - CORRECCIÓN DE SYNTAXERROR)
+/* Lógica General del Sitio (V2.0.3 - FIX DEFINITIVO)
 /* ============================= */
 
 // --- Variables Globales de Firebase ---
@@ -435,7 +435,7 @@ function setupClientPortal(auth, storage) {
                     if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
                         loginError.textContent = (currentLang === 'es') ? 'Email o contraseña incorrectos.' : 'Incorrect email or password.';
                     } else {
-                        // *** AQUÍ ESTABA LA 'T' ***
+                        // *** VERSIÓN CORREGIDA (SIN 'T') ***
                         loginError.textContent = (currentLang === 'es') ? 'Error al iniciar sesión.' : 'Error logging in.';
                     }
                 });
@@ -505,7 +505,7 @@ function setupClientPortal(auth, storage) {
                     },
                     error => {
                         console.error("Error de subida:", error);
-                        // *** AQUÍ ESTABA EL OTRO BUG (decía ${message}) ***
+                        // *** VERSIÓN CORREGIDA (CON ${error.message}) ***
                         uploadResult.innerHTML += `<p style="color:var(--color-error);">Error: ${error.message}</p>`;
                     },
                     () => {
