@@ -158,39 +158,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Control del menú desplegable con CLICK (Corregido) ---
+    /* ============================= */
+    /* REEMPLAZA CON ESTE BLOQUE     */
+    /* ============================= */
+
+    // --- Control del menú desplegable con CLICK (Corregido y Limpio) ---
+    const dropdown = document.querySelector('.dropdown');
+    const dropdownBtn = dropdown ? dropdown.querySelector('.dropbtn') : null;
+    const dropdownContent = dropdown ? dropdown.querySelector('.dropdown-content') : null;
+
     if (dropdown && dropdownBtn && dropdownContent) {
 
         dropdownBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            e.stopPropagation();
-
-            // --- INICIO DE LA CORRECCIÓN ---
-            // 1. Obtenemos el target del scroll (el href del botón)
-            const href = dropdownBtn.getAttribute('href');
-            const tgt = document.querySelector(href);
-
-            // 2. Hacemos el scroll manualmente
-            if (tgt) {
-                const headerOffset = 70;
-                const elementPosition = tgt.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'auto'
-                });
-            }
-            // --- FIN DE LA CORRECCIÓN ---
+            // ¡NO HAY e.stopPropagation()!
+            // ¡NO HAY scroll manual!
+            // Esta función AHORA SÓLO se encarga de abrir y cerrar el menú.
 
             // Lógica existente para abrir/cerrar el menú
             const isVisible = dropdownContent.style.display === 'block';
+
             if (isVisible) {
-                // ... (código para cerrar) ...
+                // Cerrar
+                dropdownContent.style.opacity = '0';
+                dropdownContent.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    dropdownContent.style.display = 'none';
+                }, 200);
             } else {
                 // Abrir
                 dropdownContent.style.display = 'block';
-                // Forzar reflow
-                dropdownContent.offsetHeight;
+                dropdownContent.offsetHeight; // Forzar reflow
                 dropdownContent.style.opacity = '1';
                 dropdownContent.style.transform = 'translateY(0)';
             }
