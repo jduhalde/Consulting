@@ -1,5 +1,5 @@
 /* ============================= */
-/* Lógica General del Sitio (V1.3 - Corrección Formulario)
+/* Lógica General del Sitio (V1.9 - CORRECCIÓN FORMULARIO Y LOGOS)
 /* ============================= */
 
 // --- Variables Globales de Firebase ---
@@ -158,9 +158,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- FUNCIÓN DE INICIALIZACIÓN DE FIREBASE (AHORA GLOBAL) ---
+    // *** CORRECCIÓN CRÍTICA: Configurar el formulario INMEDIATAMENTE ***
+    setupContactForm();
+
+    // --- FUNCIÓN DE INICIALIZACIÓN DE FIREBASE ---
     const checkFirebase = () => {
-        // Espera a que los SDKs y la config estén listos
         if (typeof firebase !== 'undefined' && firebase.app && typeof firebaseConfig !== 'undefined' && firebase.firestore) {
             initializeFirebase();
         } else {
@@ -176,10 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // --- INICIALIZAR SERVICIOS GLOBALES ---
         db = firebase.firestore();
-
-        // --- (CORRECCIÓN) MOVER LA LÓGICA DEL FORMULARIO AQUÍ ---
-        // Ahora, el formulario solo se activa DESPUÉS de que 'db' (Firestore) existe.
-        setupContactForm();
 
         // --- LÓGICA DEL PORTAL DE CLIENTES (SI EXISTE) ---
         if (document.getElementById('login-form')) {
@@ -199,89 +197,108 @@ document.addEventListener('DOMContentLoaded', () => {
 }); // Fin del DOMContentLoaded
 
 /* ============================= */
-/* Lógica del Formulario de Contacto (AHORA EN SU PROPIA FUNCIÓN)
+/* Lógica del Formulario de Contacto (AHORA CON PROMISE)
 /* ============================= */
 function setupContactForm() {
     const qs = (s) => document.querySelector(s);
     const contactForm = qs('#contactForm');
 
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+    if (!contactForm) return;
 
-            const submitButton = contactForm.querySelector('button[type="submit"]');
-            submitButton.disabled = true;
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
 
-            const name = qs('#name').value.trim();
-            const email = qs('#email').value.trim();
-            const message = qs('#message').value.trim();
-            const feedback = qs('#contactFeedback');
-            const currentLang = localStorage.getItem('lang') || 'es';
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
 
-            feedback.textContent = '';
+        const name = qs('#name').value.trim();
+        const email = qs('#email').value.trim();
+        const message = qs('#message').value.trim();
+        const feedback = qs('#contactFeedback');
+        const currentLang = localStorage.getItem('lang') || 'es';
 
-            const msgs = {
-                es: {
-                    fill: 'Por favor completá todos los campos.',
-                    email: 'Ingresá un email válido.',
-                    success: '¡Mensaje enviado! Gracias por contactarte.',
-                    error: 'Error: No se pudo enviar el mensaje. Intenta de nuevo.'
-                },
-                en: {
-                    fill: 'Please fill in all fields.',
-                    email: 'Please enter a valid email.',
-                    success: 'Message sent! Thank you for getting in touch.',
-                    error: 'Error: Could not send message. Please try again.'
+        feedback.textContent = '';
+
+        const msgs = {
+            es: {
+                fill: 'Por favor completá todos los campos.',
+                email: 'Ingresá un email válido.',
+                success: '¡Mensaje enviado! Gracias por contactarte.',
+                error: 'Error: No se pudo enviar el mensaje. Intenta de nuevo.',
+                waiting: 'Iniciando conexión...'
+            },
+            en: {
+                fill: 'Please fill in all fields.',
+                email: 'Please enter a valid email.',
+                success: 'Message sent! Thank you for getting in touch.',
+                error: 'Error: Could not send message. Please try again.',
+                waiting: 'Connecting...'
+            }
+        };
+
+        // Validaciones básicas
+        if (!name || !email || !message) {
+            feedback.style.color = 'var(--color-error)';
+            feedback.textContent = msgs[currentLang].fill;
+            submitButton.disabled = false;
+            return;
+        }
+
+        const re = /\S+@\S+\.\S+/;
+        if (!re.test(email)) {
+            feedback.style.color = 'var(--color-error)';
+            feedback.textContent = msgs[currentLang].email;
+            submitButton.disabled = false;
+            return;
+        }
+
+        // *** CORRECCIÓN: Esperar a que 'db' esté listo ***
+        const waitForDB = () => {
+            return new Promise((resolve, reject) => {
+                if (db) {
+                    resolve();
+                } else {
+                    feedback.style.color = 'var(--color-texto-secundario)';
+                    feedback.textContent = msgs[currentLang].waiting;
+
+                    let attempts = 0;
+                    const checkDB = setInterval(() => {
+                        attempts++;
+                        if (db) {
+                            clearInterval(checkDB);
+                            resolve();
+                        } else if (attempts > 50) { // 5 segundos máximo
+                            clearInterval(checkDB);
+                            reject(new Error('Firebase timeout'));
+                        }
+                    }, 100);
                 }
-            };
+            });
+        };
 
-            if (!name || !email || !message) {
-                feedback.style.color = 'var(--color-error)';
-                feedback.textContent = msgs[currentLang].fill;
+        // Enviar datos a Firestore
+        waitForDB()
+            .then(() => {
+                return db.collection("mensajes_contacto").add({
+                    nombre: name,
+                    email: email,
+                    mensaje: message,
+                    fecha: new Date()
+                });
+            })
+            .then(() => {
+                feedback.style.color = 'var(--color-exito)';
+                feedback.textContent = msgs[currentLang].success;
+                contactForm.reset();
                 submitButton.disabled = false;
-                return;
-            }
-
-            const re = /\S+@\S+\.\S+/;
-            if (!re.test(email)) {
-                feedback.style.color = 'var(--color-error)';
-                feedback.textContent = msgs[currentLang].email;
-                submitButton.disabled = false;
-                return;
-            }
-
-            if (!db) {
-                console.error("Firestore (db) no está inicializado.");
+            })
+            .catch((error) => {
+                console.error("Error al guardar mensaje en Firestore: ", error);
                 feedback.style.color = 'var(--color-error)';
                 feedback.textContent = msgs[currentLang].error;
                 submitButton.disabled = false;
-                return;
-            }
-
-            // --- INICIO DE LA LÓGICA DE FIRESTORE ---
-            db.collection("mensajes_contacto").add({
-                nombre: name,
-                email: email,
-                mensaje: message,
-                fecha: new Date()
-            })
-                .then(() => {
-                    // Éxito
-                    feedback.style.color = 'var(--color-exito)';
-                    feedback.textContent = msgs[currentLang].success;
-                    contactForm.reset();
-                    submitButton.disabled = false;
-                })
-                .catch((error) => {
-                    // Error
-                    console.error("Error al guardar mensaje en Firestore: ", error);
-                    feedback.style.color = 'var(--color-error)';
-                    feedback.textContent = msgs[currentLang].error;
-                    submitButton.disabled = false;
-                });
-            // --- FIN DE LA LÓGICA DE FIRESTORE ---
-        });
-    }
+            });
+    });
 }
 
 /* ============================= */
