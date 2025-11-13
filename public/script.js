@@ -11,7 +11,7 @@ let db, auth, storage;
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- Inicializar Íconos Lucide ---
-    if (typeof lucide !== 'undefined') {
+    if (typeof lucide !== 'undefined' && lucide.createIcons) {
         lucide.createIcons();
     }
 

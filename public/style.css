@@ -109,6 +109,11 @@ header .logo video {
   margin-top: 7px;
 }
 
+header .logo img {
+  height: 70px;
+  margin-top: 7px;
+}
+
 nav {
   margin-left: auto;
 }
