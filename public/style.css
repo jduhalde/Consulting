@@ -140,7 +140,7 @@ nav ul li a.active {
 }
 
 /* --- Estilos Menú Desplegable --- */
-/* --- Estilos Menú Desplegable (CORREGIDO) --- */
+
 .dropdown {
   position: relative;
 }
@@ -165,38 +165,41 @@ nav ul li a.active {
   border-top-color: var(--color-acento);
 }
 
+/* CRÍTICO: Crear un puente invisible entre el botón y el menú */
+.dropdown::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: -20px;
+  right: -20px;
+  height: 20px;
+  /* Puente invisible de 20px */
+  background: transparent;
+  z-index: 1000;
+}
+
 .dropdown-content {
   display: none;
   position: absolute;
-  top: 100%;
+  top: calc(100% + 10px);
+  /* Espacio visual pero cubierto por el ::before */
   left: -20px;
   background-color: var(--color-fondo);
   min-width: 240px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 10px 0;
-  margin-top: 5px;
-  /* CAMBIADO: de 15px a 5px para reducir el gap */
   z-index: 1001;
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  pointer-events: none;
-  /* AGREGADO: evita que el menú bloquee el hover */
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.dropdown:hover .dropdown-content {
-  display: block;
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-  /* AGREGADO: permite hacer clic en el menú */
-}
-
-/* NUEVO: Mantener el menú visible cuando el mouse está sobre él */
+.dropdown:hover .dropdown-content,
 .dropdown-content:hover {
   display: block;
   opacity: 1;
+  transform: translateY(0);
 }
 
 .dropdown-content a {
