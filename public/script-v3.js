@@ -1,5 +1,5 @@
 /* ============================= */
-/* Lógica General del Sitio (V2.0.3 - FIX DEFINITIVO)
+/* Lógica General del Sitio (V3.0.0 - CLEAN)
 /* ============================= */
 
 // --- Variables Globales de Firebase ---
@@ -26,10 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ============================= */
-    /* INICIO DE LA CORRECCIÓN V2.0.0  */
+    /* CONTROL DEL MENÚ DESPLEGABLE */
     /* ============================= */
 
-    // --- Control del menú desplegable con CLICK (DEBE IR ANTES DEL SMOOTH SCROLL) ---
     const dropdown = document.querySelector('.dropdown');
     const dropdownBtn = dropdown ? dropdown.querySelector('.dropbtn') : null;
     const dropdownContent = dropdown ? dropdown.querySelector('.dropdown-content') : null;
@@ -39,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Toggle menú al hacer clic en "Soluciones"
         dropdownBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            e.stopPropagation(); // IMPORTANTE: Detener propagación para que no llegue al smooth scroll
+            e.stopPropagation();
 
             const isVisible = dropdownContent.style.display === 'block';
 
@@ -87,9 +86,12 @@ document.addEventListener('DOMContentLoaded', () => {
         dropdownBtn.style.cursor = 'pointer';
     }
 
-    // --- Smooth scroll para links internos (CON MANEJO DE ERRORES) ---
+    /* ============================= */
+    /* SMOOTH SCROLL */
+    /* ============================= */
+
     document.addEventListener('click', (e) => {
-        // Ignorar clicks en el dropdown button (ya lo maneja el listener de arriba)
+        // Ignorar clicks en el dropdown button
         if (e.target.closest('.dropbtn')) {
             return;
         }
@@ -129,16 +131,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (error) {
             console.warn('Error en smooth scroll:', error);
-            // Permitir navegación normal si hay error
         }
     });
 
     /* ============================= */
-    /* FIN DE LA CORRECCIÓN V2.0.0     */
+    /* MENÚ HAMBURGUESA */
     /* ============================= */
 
-
-    // --- Menú Hamburguesa (Corregido) ---
     const hamburger = qs('#hamburger');
     const mainNav = qs('#mainNav > ul');
     if (hamburger && mainNav) {
@@ -168,7 +167,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Lógica del Selector de Idioma ---
+    /* ============================= */
+    /* SELECTOR DE IDIOMA */
+    /* ============================= */
+
     const langButtons = qsa('.lang-btn');
     const translatableElements = qsa('[data-es]');
     const placeholderElements = qsa('[placeholder-es]');
@@ -197,7 +199,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('lang') || 'es';
     setLanguage(savedLang);
 
-    // --- Lógica Botón "Volver Arriba" ---
+    /* ============================= */
+    /* BOTÓN VOLVER ARRIBA */
+    /* ============================= */
+
     const scrollToTopBtn = qs('#scrollToTopBtn');
     if (scrollToTopBtn) {
         window.addEventListener('scroll', () => {
@@ -209,44 +214,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* --- INICIO DE BLOQUE COMENTADO (BUG DE RENDIMIENTO) ---
-    // --- Resaltado de Navegación al hacer Scroll ---
-    const sections = qsa('section[id]');
-    const navLinks = qsa('#mainNav ul li a');
-    const solutionSections = ['agentes', 'casos-de-uso', 'proceso'];
+    /* ============================= */
+    /* CONFIGURAR FORMULARIO */
+    /* ============================= */
 
-    if (sections.length > 0 && navLinks.length > 0) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.getAttribute('id');
-                    let activeLinkHref = `#${id}`;
-
-                    if (solutionSections.includes(id)) {
-                        activeLinkHref = '#agentes';
-                    }
-
-                    navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        const linkHref = link.getAttribute('href');
-                        if (linkHref && linkHref.startsWith('#') && linkHref === activeLinkHref) {
-                            link.classList.add('active');
-                        }
-                    });
-                }
-            });
-        }, { rootMargin: '-30% 0px -70% 0px' });
-
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-    }
-    --- FIN DE BLOQUE COMENTADO (BUG DE RENDIMIENTO) --- */
-
-    // *** CORRECCIÓN CRÍTICA: Configurar el formulario INMEDIATAMENTE ***
     setupContactForm();
 
-    // --- FUNCIÓN DE INICIALIZACIÓN DE FIREBASE ---
+    /* ============================= */
+    /* INICIALIZACIÓN DE FIREBASE */
+    /* ============================= */
+
     const checkFirebase = () => {
         if (typeof firebase !== 'undefined' && firebase.app && typeof firebaseConfig !== 'undefined' && firebase.firestore) {
             initializeFirebase();
@@ -257,33 +234,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function initializeFirebase() {
         if (firebase.apps.length > 0) {
-            return; // Evitar doble inicialización
+            return;
         }
         firebase.initializeApp(firebaseConfig);
 
-        // --- INICIALIZAR SERVICIOS GLOBALES ---
         db = firebase.firestore();
 
-        // --- LÓGICA DEL PORTAL DE CLIENTES (SI EXISTE) ---
+        // Portal de clientes (si existe)
         if (document.getElementById('login-form')) {
             if (firebase.auth && firebase.storage) {
                 auth = firebase.auth();
                 storage = firebase.storage();
                 setupClientPortal(auth, storage);
             } else {
-                console.error("No se pudieron cargar los SDK de Auth o Storage para el portal.");
+                console.error("No se pudieron cargar los SDK de Auth o Storage.");
             }
         }
     }
 
-    // --- EJECUTAR INICIALIZACIÓN ---
     checkFirebase();
 
 }); // Fin del DOMContentLoaded
 
 /* ============================= */
-/* Lógica del Formulario de Contacto (AHORA CON PROMISE)
+/* FORMULARIO DE CONTACTO */
 /* ============================= */
+
 function setupContactForm() {
     const qs = (s) => document.querySelector(s);
     const contactForm = qs('#contactForm');
@@ -321,7 +297,7 @@ function setupContactForm() {
             }
         };
 
-        // Validaciones básicas
+        // Validaciones
         if (!name || !email || !message) {
             feedback.style.color = 'var(--color-error)';
             feedback.textContent = msgs[currentLang].fill;
@@ -337,7 +313,7 @@ function setupContactForm() {
             return;
         }
 
-        // *** CORRECCIÓN: Esperar a que 'db' esté listo ***
+        // Esperar a que db esté listo
         const waitForDB = () => {
             return new Promise((resolve, reject) => {
                 if (db) {
@@ -352,7 +328,7 @@ function setupContactForm() {
                         if (db) {
                             clearInterval(checkDB);
                             resolve();
-                        } else if (attempts > 50) { // 5 segundos máximo
+                        } else if (attempts > 50) {
                             clearInterval(checkDB);
                             reject(new Error('Firebase timeout'));
                         }
@@ -361,7 +337,7 @@ function setupContactForm() {
             });
         };
 
-        // Enviar datos a Firestore
+        // Enviar a Firestore
         waitForDB()
             .then(() => {
                 return db.collection("mensajes_contacto").add({
@@ -378,7 +354,7 @@ function setupContactForm() {
                 submitButton.disabled = false;
             })
             .catch((error) => {
-                console.error("Error al guardar mensaje en Firestore: ", error);
+                console.error("Error al guardar mensaje:", error);
                 feedback.style.color = 'var(--color-error)';
                 feedback.textContent = msgs[currentLang].error;
                 submitButton.disabled = false;
@@ -387,9 +363,9 @@ function setupContactForm() {
 }
 
 /* ============================= */
-/* Lógica del Portal de Clientes (Firebase)
-/* (Refactorizada en su propia función)
+/* PORTAL DE CLIENTES */
 /* ============================= */
+
 function setupClientPortal(auth, storage) {
 
     const loginForm = document.getElementById('login-form');
@@ -435,7 +411,6 @@ function setupClientPortal(auth, storage) {
                     if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
                         loginError.textContent = (currentLang === 'es') ? 'Email o contraseña incorrectos.' : 'Incorrect email or password.';
                     } else {
-                        // *** VERSIÓN CORREGIDA (SIN 'T') ***
                         loginError.textContent = (currentLang === 'es') ? 'Error al iniciar sesión.' : 'Error logging in.';
                     }
                 });
@@ -505,7 +480,6 @@ function setupClientPortal(auth, storage) {
                     },
                     error => {
                         console.error("Error de subida:", error);
-                        // *** VERSIÓN CORREGIDA (CON ${error.message}) ***
                         uploadResult.innerHTML += `<p style="color:var(--color-error);">Error: ${error.message}</p>`;
                     },
                     () => {
