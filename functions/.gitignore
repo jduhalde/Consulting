@@ -1,2 +1,76 @@
+# ===== FIREBASE =====
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+database-debug.log
+
+# ===== SECRETS & CREDENTIALS (CRÍTICO - NUNCA SUBIR) =====
+.env
+.env.local
+.env.production
+serviceAccountKey.json
+*-key.json
+*.pfx
+*.p12
+certs/
+secrets/
+
+# ===== DEPENDENCIES =====
 node_modules/
-*.local
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# ===== LOGS =====
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===== BUILD OUTPUTS =====
+dist/
+build/
+.cache/
+*.tsbuildinfo
+
+# ===== IDE & EDITORS =====
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# ===== OS =====
+Thumbs.db
+Desktop.ini
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ===== TESTING =====
+coverage/
+.nyc_output/
+*.lcov
+
+# ===== TEMPORARY FILES =====
+tmp/
+temp/
+*.tmp
+
+# ===== FIREBASE EMULATORS =====
+.firebase/
+firebase-debug.log*
+firestore-debug.log*
+
+# ===== BACKUP FILES =====
+*.bak
+*.backup
+
+# ===== PYTHON (si usas scripts auxiliares) =====
+__pycache__/
+*.py[cod]
+venv/
+env/
