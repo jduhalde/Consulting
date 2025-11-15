@@ -19,10 +19,10 @@ class Dashboard {
   // ========================================
   // INITIALIZATION
   // ========================================
-  
+
   async init() {
     console.log('🚀 Initializing Dashboard...');
-    
+
     // Verificar que las dependencias estén cargadas
     if (!window.APP_CONFIG) {
       console.error('❌ CONFIG not loaded');
@@ -52,10 +52,10 @@ class Dashboard {
   // ========================================
   // BACKEND CONNECTION
   // ========================================
-  
+
   async checkBackendHealth() {
     const result = await window.apiClient.checkHealth();
-    
+
     if (result.success) {
       this.showToast('Conectado al backend', 'success');
       console.log('✅ Backend OK:', result.data);
@@ -68,11 +68,11 @@ class Dashboard {
   // ========================================
   // RENDER STATS
   // ========================================
-  
+
   async renderStats() {
     // Intentar obtener stats del backend
     const result = await window.apiClient.getUserStats();
-    
+
     if (result.success) {
       this.stats = result.stats;
     }
@@ -120,7 +120,7 @@ class Dashboard {
   // ========================================
   // RENDER AGENTS
   // ========================================
-  
+
   renderAgents() {
     const showAll = window.APP_CONFIG.SHOW_ALL_AGENTS;
     let agents = window.AGENTS_CATALOG;
@@ -136,7 +136,7 @@ class Dashboard {
     }
 
     const grid = document.getElementById('agentsGrid');
-    
+
     if (agents.length === 0) {
       grid.innerHTML = `
         <div class="empty-state" style="grid-column: 1 / -1;">
@@ -181,49 +181,25 @@ class Dashboard {
   // ========================================
   // AGENT SELECTION
   // ========================================
-  
+
   selectAgent(agentId) {
-    this.selectedAgent = window.AgentsAPI.getAgentById(agentId);
-    
-    if (!this.selectedAgent) {
-      this.showToast('Agente no encontrado', 'error');
-      return;
-    }
-
-    // Mostrar modal de configuración (por ahora un alert)
-    const message = `
-AGENTE SELECCIONADO
-${this.selectedAgent.name}
-
-${this.selectedAgent.description}
-
-Costo: ${this.selectedAgent.cost}/${this.selectedAgent.unit}
-Tiempo promedio: ${this.selectedAgent.avgTime}
-
-Input: ${this.selectedAgent.inputTypes.join(', ')}
-Output: ${this.selectedAgent.outputTypes.join(', ')}
-
-En producción: Se abriría un modal con configuración específica para este agente.
-    `.trim();
-
-    alert(message);
-    
-    console.log('Selected agent:', this.selectedAgent);
+    // Abrir modal en lugar de alert
+    window.agentModal.open(agentId);
   }
 
   // ========================================
   // FILTER TABS
   // ========================================
-  
+
   filterAgents(filter) {
     this.currentFilter = filter;
-    
+
     // Update active tab
     document.querySelectorAll('.tab').forEach(tab => {
       tab.classList.remove('active');
     });
     event.target.classList.add('active');
-    
+
     // Re-render agents
     this.renderAgents();
   }
@@ -231,7 +207,7 @@ En producción: Se abriría un modal con configuración específica para este ag
   // ========================================
   // FILE UPLOAD
   // ========================================
-  
+
   setupEventListeners() {
     const uploadZone = document.getElementById('uploadZone');
     const fileInput = document.getElementById('fileInput');
@@ -316,14 +292,14 @@ En producción: Se abriría un modal con configuración específica para este ag
   async uploadFile(file) {
     try {
       const result = await window.apiClient.uploadFile(
-        file, 
+        file,
         this.selectedAgent.id,
         { uploadedAt: new Date().toISOString() }
       );
 
       if (result.success) {
         this.showToast(`✓ ${file.name} subido correctamente`, 'success');
-        
+
         // Crear job de procesamiento
         await this.createJob(result.uploadId, result.storageUrl);
       } else {
@@ -345,7 +321,7 @@ En producción: Se abriría un modal con configuración específica para este ag
 
       if (result.success) {
         this.showToast('Procesamiento iniciado', 'success');
-        
+
         // Reload jobs
         setTimeout(() => this.loadJobs(), 1000);
       } else {
@@ -360,10 +336,10 @@ En producción: Se abriría un modal con configuración específica para este ag
   // ========================================
   // JOBS
   // ========================================
-  
+
   async loadJobs() {
     const result = await window.apiClient.getJobs(10);
-    
+
     if (result.success) {
       this.jobs = result.jobs;
       this.renderJobs();
@@ -375,7 +351,7 @@ En producción: Se abriría un modal con configuración específica para este ag
 
   renderJobs() {
     const container = document.getElementById('jobsContainer');
-    
+
     if (!container) {
       console.warn('Jobs container not found');
       return;
@@ -405,7 +381,7 @@ En producción: Se abriría un modal con configuración específica para este ag
   renderJobItem(job) {
     const agent = window.AgentsAPI.getAgentById(job.agentType);
     const agentName = agent ? agent.name : job.agentName || 'Desconocido';
-    
+
     return `
       <div class="job-item">
         <div class="job-info">
@@ -435,7 +411,7 @@ En producción: Se abriría un modal con configuración específica para este ag
 
   formatDate(timestamp) {
     if (!timestamp) return 'N/A';
-    
+
     const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
     return new Intl.DateTimeFormat('es-AR', {
       day: '2-digit',
@@ -449,14 +425,14 @@ En producción: Se abriría un modal con configuración específica para este ag
   // ========================================
   // TOAST NOTIFICATIONS
   // ========================================
-  
+
   showToast(message, type = 'info') {
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
     toast.textContent = message;
-    
+
     document.body.appendChild(toast);
-    
+
     setTimeout(() => {
       toast.remove();
     }, 3000);
@@ -479,10 +455,10 @@ if (document.readyState === 'loading') {
 function initDashboard() {
   dashboard = new Dashboard();
   dashboard.init();
-  
+
   // Hacer disponible globalmente para onclick handlers
   window.dashboard = dashboard;
-  
+
   // Auto-refresh jobs cada 10 segundos si está habilitado
   if (window.APP_CONFIG?.FEATURES.ENABLE_REALTIME_UPDATES) {
     setInterval(() => {

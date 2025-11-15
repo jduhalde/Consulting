@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Portal Multi-Servicio IA - Julio Duhalde Consulting">
     <title>Portal IA - Dashboard | Julio Duhalde Consulting</title>
-    
+
     <!-- Styles -->
     <link rel="stylesheet" href="assets/css/dashboard.css">
-    
+    <link rel="stylesheet" href="assets/css/modal.css">
+
     <!-- Favicon (opcional) -->
     <!-- <link rel="icon" href="assets/favicon.ico"> -->
 </head>
+
 <body>
-    
+
     <!-- ========================================
          HEADER
          ======================================== -->
@@ -23,7 +26,7 @@
                 <span class="logo-icon">🤖</span>
                 <span>Portal Multi-Servicio IA</span>
             </div>
-            
+
             <div class="user-info">
                 <span class="badge badge-success" id="activeAgentsBadge">7 Activos</span>
                 <span class="badge badge-info" id="totalAgentsBadge">16 Total</span>
@@ -37,7 +40,7 @@
          MAIN CONTAINER
          ======================================== -->
     <div class="container">
-        
+
         <!-- Stats Grid -->
         <div class="stats-grid" id="statsGrid">
             <!-- Renderizado dinámicamente por dashboard.js -->
@@ -56,8 +59,8 @@
             <div class="upload-subtitle">
                 O haz click para seleccionar • PDF, JPG, PNG, XLSX, DOCX
             </div>
-            <input type="file" id="fileInput" style="display: none;" multiple 
-                   accept=".pdf,.jpg,.jpeg,.png,.xlsx,.xls,.csv,.doc,.docx">
+            <input type="file" id="fileInput" style="display: none;" multiple
+                accept=".pdf,.jpg,.jpeg,.png,.xlsx,.xls,.csv,.doc,.docx">
         </div>
 
         <!-- Agents Section -->
@@ -101,16 +104,18 @@
     <!-- ========================================
          SCRIPTS - Orden de carga IMPORTANTE
          ======================================== -->
-    
+
     <!-- 1. Configuración (debe cargar primero) -->
     <script src="assets/js/config.js"></script>
-    
+
     <!-- 2. Catálogo de agentes -->
     <script src="assets/js/agents-data.js"></script>
-    
+
     <!-- 3. API Client -->
     <script src="assets/js/api-client.js"></script>
-    
+
+    <script src="assets/js/agent-modal.js"></script>
+
     <!-- 4. Dashboard (debe cargar último) -->
     <script src="assets/js/dashboard.js"></script>
 
@@ -121,7 +126,7 @@
         // Actualizar badges según configuración
         document.addEventListener('DOMContentLoaded', () => {
             const modeBadge = document.getElementById('modeBadge');
-            
+
             if (window.APP_CONFIG) {
                 // Actualizar badge de modo
                 if (window.APP_CONFIG.SHOW_ALL_AGENTS) {
@@ -131,7 +136,7 @@
                     modeBadge.textContent = 'Modo Producción';
                     modeBadge.className = 'badge badge-success';
                 }
-                
+
                 // Log de configuración
                 console.log('📊 Configuración cargada:', {
                     modo: window.APP_CONFIG.SHOW_ALL_AGENTS ? 'Desarrollo' : 'Producción',
@@ -143,4 +148,5 @@
     </script>
 
 </body>
+
 </html>
