@@ -3,417 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal IA - Julio Duhalde Consulting</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1e40af;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, var(--gray-50) 0%, var(--gray-100) 100%);
-            min-height: 100vh;
-        }
-
-        /* Header */
-        .header {
-            background: white;
-            border-bottom: 1px solid var(--gray-200);
-            padding: 1rem 2rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--gray-900);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .badge {
-            padding: 0.375rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .badge-success {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        /* Main Container */
-        .container {
-            max-width: 1400px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            border: 1px solid var(--gray-200);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .stat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.75rem;
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: var(--gray-600);
-            font-weight: 500;
-        }
-
-        .stat-icon {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--gray-900);
-        }
-
-        /* Agent Cards */
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            margin-bottom: 1.5rem;
-        }
-
-        .agents-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .agent-card {
-            background: white;
-            border: 1px solid var(--gray-200);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .agent-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
-            border-color: var(--primary);
-        }
-
-        .agent-status {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--success);
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
-        }
-
-        .agent-icon {
-            width: 3rem;
-            height: 3rem;
-            border-radius: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .agent-name {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--gray-900);
-            margin-bottom: 0.5rem;
-        }
-
-        .agent-description {
-            font-size: 0.875rem;
-            color: var(--gray-600);
-            line-height: 1.5;
-            margin-bottom: 1rem;
-        }
-
-        .agent-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 1rem;
-            border-top: 1px solid var(--gray-200);
-        }
-
-        .agent-cost {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--primary);
-        }
-
-        /* Upload Zone */
-        .upload-section {
-            background: white;
-            border: 2px dashed var(--gray-300);
-            border-radius: 0.75rem;
-            padding: 3rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .upload-section:hover,
-        .upload-section.dragover {
-            border-color: var(--primary);
-            background: rgba(37, 99, 235, 0.02);
-        }
-
-        .upload-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-
-        .upload-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--gray-900);
-            margin-bottom: 0.5rem;
-        }
-
-        .upload-subtitle {
-            color: var(--gray-600);
-            font-size: 0.875rem;
-        }
-
-        /* Jobs List */
-        .jobs-container {
-            background: white;
-            border-radius: 0.75rem;
-            border: 1px solid var(--gray-200);
-            overflow: hidden;
-        }
-
-        .job-item {
-            padding: 1.25rem 1.5rem;
-            border-bottom: 1px solid var(--gray-200);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background 0.2s;
-        }
-
-        .job-item:hover {
-            background: var(--gray-50);
-        }
-
-        .job-item:last-child {
-            border-bottom: none;
-        }
-
-        .job-info {
-            flex: 1;
-        }
-
-        .job-name {
-            font-weight: 600;
-            color: var(--gray-900);
-            margin-bottom: 0.25rem;
-        }
-
-        .job-meta {
-            font-size: 0.875rem;
-            color: var(--gray-600);
-        }
-
-        .job-status {
-            padding: 0.375rem 0.875rem;
-            border-radius: 0.375rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .status-processing {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .status-completed {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .status-failed {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 0.625rem 1.25rem;
-            border-radius: 0.5rem;
-            font-weight: 500;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s;
-            font-size: 0.875rem;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 1rem;
-            }
-
-            .stats-grid,
-            .agents-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .header-content {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-        }
-
-        /* Loading Animation */
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .loading {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-    </style>
+    <meta name="description" content="Portal Multi-Servicio IA - Julio Duhalde Consulting">
+    <title>Portal IA - Dashboard | Julio Duhalde Consulting</title>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    
+    <!-- Favicon (opcional) -->
+    <!-- <link rel="icon" href="assets/favicon.ico"> -->
 </head>
 <body>
-    <!-- Header -->
+    
+    <!-- ========================================
+         HEADER
+         ======================================== -->
     <header class="header">
         <div class="header-content">
-            <div class="logo">🤖 Portal IA</div>
+            <div class="logo">
+                <span class="logo-icon">🤖</span>
+                <span>Portal Multi-Servicio IA</span>
+            </div>
+            
             <div class="user-info">
-                <span class="badge badge-success">Backend Local ✓</span>
+                <span class="badge badge-success" id="activeAgentsBadge">7 Activos</span>
+                <span class="badge badge-info" id="totalAgentsBadge">16 Total</span>
+                <span class="badge badge-warning" id="modeBadge">Modo Desarrollo</span>
                 <span style="color: var(--gray-600);">Demo User</span>
             </div>
         </div>
     </header>
 
-    <!-- Main Container -->
+    <!-- ========================================
+         MAIN CONTAINER
+         ======================================== -->
     <div class="container">
+        
         <!-- Stats Grid -->
-        <div class="stats-grid">
-            <div class="stat-card">
+        <div class="stats-grid" id="statsGrid">
+            <!-- Renderizado dinámicamente por dashboard.js -->
+            <div class="stat-card loading">
                 <div class="stat-header">
-                    <span class="stat-label">Agentes Disponibles</span>
-                    <div class="stat-icon" style="background: #dbeafe; color: var(--primary);">
-                        ✓
-                    </div>
+                    <span class="stat-label">Cargando...</span>
                 </div>
-                <div class="stat-value">7</div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-header">
-                    <span class="stat-label">Jobs Este Mes</span>
-                    <div class="stat-icon" style="background: #d1fae5; color: var(--success);">
-                        📊
-                    </div>
-                </div>
-                <div class="stat-value">0</div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-header">
-                    <span class="stat-label">Costo Total</span>
-                    <div class="stat-icon" style="background: #fef3c7; color: var(--warning);">
-                        💰
-                    </div>
-                </div>
-                <div class="stat-value">$0</div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-header">
-                    <span class="stat-label">Archivos Procesados</span>
-                    <div class="stat-icon" style="background: #e0e7ff; color: #6366f1;">
-                        📁
-                    </div>
-                </div>
-                <div class="stat-value">0</div>
+                <div class="stat-value">-</div>
             </div>
         </div>
 
@@ -421,155 +53,94 @@
         <div class="upload-section" id="uploadZone">
             <div class="upload-icon">📤</div>
             <div class="upload-title">Arrastra archivos aquí</div>
-            <div class="upload-subtitle">O haz click para seleccionar • PDF, JPG, PNG, XLSX</div>
-            <input type="file" id="fileInput" style="display: none;" multiple>
+            <div class="upload-subtitle">
+                O haz click para seleccionar • PDF, JPG, PNG, XLSX, DOCX
+            </div>
+            <input type="file" id="fileInput" style="display: none;" multiple 
+                   accept=".pdf,.jpg,.jpeg,.png,.xlsx,.xls,.csv,.doc,.docx">
         </div>
 
         <!-- Agents Section -->
-        <h2 class="section-title">Agentes IA Disponibles</h2>
+        <div class="section-header">
+            <h2 class="section-title">Catálogo de Agentes IA</h2>
+            <div class="filter-tabs">
+                <button class="tab active" onclick="dashboard.filterAgents('all')">
+                    Todos (16)
+                </button>
+                <button class="tab" onclick="dashboard.filterAgents('active')">
+                    Activos (7)
+                </button>
+                <button class="tab" onclick="dashboard.filterAgents('planned')">
+                    En Desarrollo (9)
+                </button>
+            </div>
+        </div>
+
         <div class="agents-grid" id="agentsGrid">
-            <!-- Agents will be dynamically loaded -->
+            <!-- Renderizado dinámicamente por dashboard.js -->
+            <div class="agent-card loading">
+                <div class="agent-icon" style="background: var(--gray-200);">
+                    <div class="spinner"></div>
+                </div>
+                <div class="agent-name">Cargando agentes...</div>
+            </div>
         </div>
 
         <!-- Jobs Section -->
         <h2 class="section-title">Trabajos Recientes</h2>
         <div class="jobs-container" id="jobsContainer">
-            <div style="padding: 3rem; text-align: center; color: var(--gray-600);">
-                No hay trabajos todavía. Sube un archivo para comenzar.
+            <!-- Renderizado dinámicamente por dashboard.js -->
+            <div class="empty-state">
+                <div class="empty-state-icon">⏳</div>
+                <p>Cargando trabajos...</p>
             </div>
         </div>
+
     </div>
 
+    <!-- ========================================
+         SCRIPTS - Orden de carga IMPORTANTE
+         ======================================== -->
+    
+    <!-- 1. Configuración (debe cargar primero) -->
+    <script src="assets/js/config.js"></script>
+    
+    <!-- 2. Catálogo de agentes -->
+    <script src="assets/js/agents-data.js"></script>
+    
+    <!-- 3. API Client -->
+    <script src="assets/js/api-client.js"></script>
+    
+    <!-- 4. Dashboard (debe cargar último) -->
+    <script src="assets/js/dashboard.js"></script>
+
+    <!-- ========================================
+         INLINE SCRIPT - Configuración inicial
+         ======================================== -->
     <script>
-        // Agents Data
-        const agents = [
-            {
-                id: 'facturas_afip',
-                name: 'Contador IA - Facturas AFIP',
-                description: 'Procesa facturas argentinas, valida contra AFIP, exporta a Excel',
-                icon: '📄',
-                color: '#dbeafe',
-                cost: '$0.50/factura',
-                status: 'active'
-            },
-            {
-                id: 'contratos',
-                name: 'Auditor IA - Contratos Legales',
-                description: 'Analiza contratos, detecta riesgos, genera reportes ejecutivos',
-                icon: '⚖️',
-                color: '#d1fae5',
-                cost: '$1.20/contrato',
-                status: 'active'
-            },
-            {
-                id: 'vision_qa',
-                name: 'Inspector IA - Control de Calidad',
-                description: 'Detecta defectos en productos con visión computacional custom',
-                icon: '👁️',
-                color: '#fef3c7',
-                cost: '$0.003/imagen',
-                status: 'active'
-            },
-            {
-                id: 'chatbot_comercial',
-                name: 'Chatbot Comercial WhatsApp',
-                description: 'Asistente de ventas 24/7 para atender clientes vía WhatsApp',
-                icon: '💬',
-                color: '#e0e7ff',
-                cost: '$0.01/conversación',
-                status: 'active'
-            },
-            {
-                id: 'knowledge_assistant',
-                name: 'Knowledge Assistant Interno',
-                description: 'Soporte técnico para empleados basado en manuales y documentación',
-                icon: '📚',
-                color: '#fce7f3',
-                cost: '$0.02/consulta',
-                status: 'active'
-            },
-            {
-                id: 'due_diligence',
-                name: 'Due Diligence IA',
-                description: 'Verifica proveedores/clientes en AFIP, Boletín Oficial, reputación',
-                icon: '🔍',
-                color: '#ffedd5',
-                cost: '$0.20/verificación',
-                status: 'active'
-            },
-            {
-                id: 'bi_analyst',
-                name: 'Analista de Datos IA',
-                description: 'Business Intelligence conversacional, predice tendencias, genera insights',
-                icon: '📊',
-                color: '#dcfce7',
-                cost: '$0.30/análisis',
-                status: 'active'
+        // Actualizar badges según configuración
+        document.addEventListener('DOMContentLoaded', () => {
+            const modeBadge = document.getElementById('modeBadge');
+            
+            if (window.APP_CONFIG) {
+                // Actualizar badge de modo
+                if (window.APP_CONFIG.SHOW_ALL_AGENTS) {
+                    modeBadge.textContent = 'Modo Desarrollo';
+                    modeBadge.className = 'badge badge-warning';
+                } else {
+                    modeBadge.textContent = 'Modo Producción';
+                    modeBadge.className = 'badge badge-success';
+                }
+                
+                // Log de configuración
+                console.log('📊 Configuración cargada:', {
+                    modo: window.APP_CONFIG.SHOW_ALL_AGENTS ? 'Desarrollo' : 'Producción',
+                    backend: window.APP_CONFIG.CURRENT_ENV,
+                    apiUrl: window.APP_CONFIG.getApiUrl()
+                });
             }
-        ];
-
-        // Render Agents
-        function renderAgents() {
-            const grid = document.getElementById('agentsGrid');
-            grid.innerHTML = agents.map(agent => `
-                <div class="agent-card" onclick="selectAgent('${agent.id}')">
-                    <div class="agent-status"></div>
-                    <div class="agent-icon" style="background: ${agent.color}">
-                        ${agent.icon}
-                    </div>
-                    <div class="agent-name">${agent.name}</div>
-                    <div class="agent-description">${agent.description}</div>
-                    <div class="agent-footer">
-                        <span class="agent-cost">${agent.cost}</span>
-                        <button class="btn btn-primary">Usar Agente</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Select Agent
-        function selectAgent(agentId) {
-            console.log('Selected agent:', agentId);
-            alert(`Agente seleccionado: ${agentId}\n\nEn producción: Se abrirá el formulario de configuración para este agente.`);
-        }
-
-        // Upload Zone
-        const uploadZone = document.getElementById('uploadZone');
-        const fileInput = document.getElementById('fileInput');
-
-        uploadZone.addEventListener('click', () => fileInput.click());
-
-        uploadZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadZone.classList.add('dragover');
         });
-
-        uploadZone.addEventListener('dragleave', () => {
-            uploadZone.classList.remove('dragover');
-        });
-
-        uploadZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadZone.classList.remove('dragover');
-            handleFiles(e.dataTransfer.files);
-        });
-
-        fileInput.addEventListener('change', (e) => {
-            handleFiles(e.target.files);
-        });
-
-        function handleFiles(files) {
-            console.log('Files to upload:', files);
-            alert(`${files.length} archivo(s) seleccionado(s)\n\nEn producción: Se subirían a Firebase Storage y se procesarían con el agente seleccionado.`);
-        }
-
-        // Initialize
-        renderAgents();
-
-        // Simulate backend connection check
-        setTimeout(() => {
-            console.log('✓ Connected to local backend');
-        }, 1000);
     </script>
+
 </body>
 </html>
